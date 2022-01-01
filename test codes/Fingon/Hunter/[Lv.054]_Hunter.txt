@@ -1,0 +1,33 @@
+function PreloadFiles takes nothing returns nothing
+
+	call PreloadStart()
+	call Preload( "MAP: Twilight's Eve R4" )
+	call Preload( "Brought to you by Donach#6231 and KryptonRazer#3935, developers for new Teve Community!" )
+	call Preload( "Join us at discord.tever.xyz and visit tever.xyz" )
+	call Preload( "Version: Teve_R4.17.2" )
+	call Preload( "Recommended Wc3 Version: 1.32.10.17165 (classic)" )
+	call Preload( "Player Name: Fingon" )
+	call Preload( "   " )
+	call Preload( "Hero: Hunter [Lv.54]" )
+	call Preload( "Load Type: Hero" )
+	call Preload( "-load 3PxA-a)Ek-U*o)-<O7n-vf)T-wA.q-skAO-7V4t-C<Z" )
+	call Preload( "PvP rank: None (Points: 0)" )
+	call Preload( "Fishing profession: Fishing Newbie (Points: 1)" )
+	call Preload( "   " )
+	call Preload( "Load Type: Item" )
+	call Preload( "-load2 ofa<-BTqm-(3kO-o)nK-ENaC-B7<E-2<rB-DMj7-_[Vk-j5y5-f9(" )
+	call Preload( "Gold: 73308   Shards: 0" )
+	call Preload( "Items Worn by Hero: " )
+	call Preload( "Sword of Blessed Flame" )
+	call Preload( "Blackpowder Musket" )
+	call Preload( "Mythpowder Rifle" )
+	call Preload( "Long Rifle" )
+	call Preload( "Shield of the Avenger" )
+	call Preload( "Sharpened Glaive" )
+	call Preload( "Items in Stash: " )
+	call Preload( "        " )
+	call PreloadEnd( 8232.7 )
+
+endfunction
+
+
