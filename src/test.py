@@ -19,9 +19,9 @@ hero = load('3PxA-a)Ek-U*o)-<O7n-vf)T-wA.q-skAO-7V4t-C<Z')
 hero.heroXP *= 20
 hero.professionLvl *= 3
 hero.professionRank = ProfessionRank[5]
-print('-load ' + save(hero))
+print('-load ' + save(hero, 'Fingon'))
 
 res = load2('ofa<-BTqm-(3kO-o)nK-ENaC-B7<E-2<rB-DMj7-_[Vk-j5y5-f9(')
 res.gold = 999999
 res.lumber = 200
-print('-load2 ' + save2(res))
+print('-load2 ' + save2(res, 'Fingon'))

@@ -126,7 +126,7 @@ du = {}
 Ru = {}
 Iu = 0
 bj_forLoopBIndex = 0
-player_name = 'Fingon'
+player_name = ''
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -876,9 +876,8 @@ def Cjw(Xjw: str):  # takes string Xjw returns boolean
     if not Fu:
         hu = hu.upper()
         Xjw = Xjw.upper()
-    if decode(Xjw):
-        return True
-    return False
+    decode(Xjw) # it always returns True at this point. Might be changed later
+    return True
 
 
 def tkr(ukr: str):  # takes string ukr returns boolean
@@ -971,7 +970,7 @@ def load2(code: str):  # Jkr, 40635
     return result
 
 
-def save(fields: HeroCodeFields, name: str = 'Fingon'):
+def save(fields: HeroCodeFields, name: str):
     global hu, nu, player_name
     player_name = name
     hu = oU[lU]
@@ -992,11 +991,11 @@ def save(fields: HeroCodeFields, name: str = 'Fingon'):
         au[nu] = ability.id
         nu += 1
         au[nu] = ability.level
-
+        
     return encode()
 
 
-def save2(fields: ItemCodeFields, name: str = 'Fingon'):
+def save2(fields: ItemCodeFields, name: str):
     global hu, nu, player_name
     player_name = name
     hu = OU[lU]
