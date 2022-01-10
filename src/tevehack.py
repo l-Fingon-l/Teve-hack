@@ -972,8 +972,9 @@ def load2(code: str):  # Jkr, 40635
     return result
 
 
-def save(fields: HeroCodeFields):
-    global hu, nu
+def save(fields: HeroCodeFields, name: str = 'Fingon'):
+    global hu, nu, player_name
+    player_name = name
     hu = oU[lU]
     au[1] = fields.int1
     au[2] = fields.int2
@@ -996,8 +997,9 @@ def save(fields: HeroCodeFields):
     return encode()
 
 
-def save2(fields: ItemCodeFields):
-    global hu, nu
+def save2(fields: ItemCodeFields, name: str = 'Fingon'):
+    global hu, nu, player_name
+    player_name = name
     hu = OU[lU]
     au[1] = fields.gold
     au[2] = fields.lumber
