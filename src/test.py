@@ -1,4 +1,4 @@
-from tevehack import save, load, save2, load2
+from tevehack import ProfessionRank, save, load, save2, load2
 
 # res = load('Y9..-vAKu-Rgj)-t4UD-eszA-Y&_t-DFf[-8J')
 # print(res)
@@ -15,7 +15,13 @@ from tevehack import save, load, save2, load2
 
 # load('F(W2-ZPr(->NNK-vkvB-&kvJ-BR]6-c!vP-ug(#-w]E')
 
-res = load2('Sxwy-yrpD-FLaC-6H9[-!K2z-doZh-mRDy-B89d-Yt7s-+(QM-fDZA')
+hero = load('3PxA-a)Ek-U*o)-<O7n-vf)T-wA.q-skAO-7V4t-C<Z')
+hero.heroXP *= 20
+hero.professionLvl *= 3
+hero.professionRank = ProfessionRank[5]
+print('-load ' + save(hero))
+
+res = load2('ofa<-BTqm-(3kO-o)nK-ENaC-B7<E-2<rB-DMj7-_[Vk-j5y5-f9(')
 res.gold = 999999
 res.lumber = 200
 print('-load2 ' + save2(res))

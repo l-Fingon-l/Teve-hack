@@ -111,7 +111,7 @@ OU = {}
 lU = 0
 Fu = False
 Qu = False
-hu = None
+hu = ''
 qu = None
 nu = 0
 fu = False
@@ -929,12 +929,11 @@ def load(code: str):  # Tkr, 51129
         return None
 
     print("Load Successful.")
-    Iu = nu
     result = HeroCodeFields(au[1], au[2], au[3], au[4], au[5], ProfessionRank[au[6]],
                             au[7], au[8], au[9], au[10], au[11])
-    for i in range(int((Iu - 11) / 2)):
+    for i in range(int((nu - 11) / 2)):
         result.abilities.append(Ability(au[12 + 2 * i], au[13 + 2 * i]))
-    result.nameID = au[Iu + 1]
+    result.checksum = au[nu + 1]
 
     return result
 
@@ -981,7 +980,7 @@ def save(fields: HeroCodeFields, name: str = 'Fingon'):
     au[3] = fields.food
     au[4] = fields.professionLvl
     au[5] = fields.hasFishingRod
-    au[6] = fields.professionRank
+    au[6] = ProfessionRank[fields.professionRank]
     au[7] = 1
     au[8] = fields.heroID
     au[9] = fields.heroXP
