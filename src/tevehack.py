@@ -82,8 +82,8 @@ class HeroCodeFields:
         self.heroXP = heroXP
         self.locationX = locationX
         self.locationY = locationY
-    abilities = []
-    checksum: int = 0
+        self.abilities = []
+        self.checksum = 0
 
 
 class ItemCodeFields:
@@ -92,10 +92,11 @@ class ItemCodeFields:
         self.lumber = lumber
         self.pvpPoints = pvpPoints
         self.numberOfItems = numberOfItems
-    items = []
-    numberOfStashItems: int = 0
-    stashItems = []
-    checksum: int = 0
+        self.items = []
+        self.numberOfStashItems = 0
+        self.stashItems = []
+        self.checksum = 0
+    
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        global variables
