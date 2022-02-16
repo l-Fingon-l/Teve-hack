@@ -1,6 +1,21 @@
 from pathlib import Path
 import re
 
+def encrypt(string):
+    result = ''
+    data = string
+    key = "0)M3}$lF%*(/|WdjviC{5u2Lm4nTb+\n><XZ I]t~h=?-_8DUcAy9oQGErV,ax1[YP:qJB\"p!fSNe6wksH'@#gK7.O&zR;\\ "
+    while len(data) > 0:
+        symbol = data[0]
+        position = 1 + key.find(symbol)
+        if position < 10:
+            encoded_symbol = '0' + str(position)
+        else: 
+            encoded_symbol = str(position)
+        result =  encoded_symbol + result
+        data = data[1:]
+
+    return result
 
 def decrypt(string):
     result = ''
@@ -11,8 +26,7 @@ def decrypt(string):
         if n == 99:
             result += '\n'
         elif n != 0:
-            result += "0)M3}$lF%*(/|WdjviC{5u2Lm4nTb+\n><XZ I]t~h=?-_8DUcAy9oQGErV," \
-                      "ax1[YP:qJB\"p!fSNe6wksH'@#gK7.O&zR;\\ "[n - 1: n]
+            result += "0)M3}$lF%*(/|WdjviC{5u2Lm4nTb+\n><XZ I]t~h=?-_8DUcAy9oQGErV,ax1[YP:qJB\"p!fSNe6wksH'@#gK7.O&zR;\\ "[n - 1: n]
     return result
 
 while True:

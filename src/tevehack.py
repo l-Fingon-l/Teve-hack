@@ -1,5 +1,3 @@
-from dataclasses import dataclass, field
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        class declarations
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,19 +14,6 @@ ProfessionRank = {
     4: 'Master_Fisherman',
     5: 'Legendary_Fisherman'
 }
-
-
-@dataclass
-class Ability:
-    id: int
-    level: int
-
-
-@dataclass
-class Item:
-    id: int
-    amount: int = 0
-
 
 """
     1: integer of a PlayerID, usually == 2, but on initialization \ during loading == 0;
@@ -71,35 +56,46 @@ class Item:
     6: checksum
 """
 
+class Ability:
+    def __init__(self, id, level):
+        self.id = id
+        self.level = level
 
-@dataclass
+
+class Item:
+    def __init__(self, id, amount):
+        self.id = id
+        self.amount = amount
+
+
 class HeroCodeFields:
-    int1: int
-    int2: int
-    food: int
-    professionLvl: int
-    hasFishingRod: int
-    professionRank: str
-    int3: int
-    heroID: int
-    heroXP: int
-    locationX: int
-    locationY: int
-    abilities: list[Ability] = field(default_factory=list)
+    def __init__(self, int1, int2, food, professionLvl, hasFishingRod,
+        professionRank, int3, heroID, heroXP, locationX, locationY):
+        self.int1 = int1
+        self.int2 = int2
+        self.food = food
+        self.professionLvl = professionLvl
+        self.hasFishingRod = hasFishingRod
+        self.professionRank = professionRank
+        self.int3 = int3
+        self.heroID = heroID
+        self.heroXP = heroXP
+        self.locationX = locationX
+        self.locationY = locationY
+    abilities = []
     checksum: int = 0
 
 
-@dataclass
 class ItemCodeFields:
-    gold: int = 0
-    lumber: int = 0
-    pvpPoints: int = 0
-    numberOfItems: int = 0
-    items: list[Item] = field(default_factory=list)
+    def __init__(self, gold, lumber, pvpPoints, numberOfItems):
+        self.gold = gold
+        self.lumber = lumber
+        self.pvpPoints = pvpPoints
+        self.numberOfItems = numberOfItems
+    items = []
     numberOfStashItems: int = 0
-    stashItems: list[Item] = field(default_factory=list)
+    stashItems = []
     checksum: int = 0
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        global variables

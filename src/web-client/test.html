@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="brython/brython.js"></script>
+  <!-- <script type="text/javascript" src="brython/brython_stdlib.js"></script> -->
+</head>
+
+<body onload="brython(1)">
+  <textarea id="input1" rows="3" cols="50" autocomplete="off">3PxA-a)Ek-U*6[-WQnm-d7Qa-yFpU-<PU3-Z5ep-q<C</textarea>
+  <textarea id="input2" rows="3" cols="50" autocomplete="off">kEF5-2d+d-o2<L-hW<T-R>D?-faQV-wU>U->]Bh-(Q*x-r<)N-TQX</textarea>
+  <br>
+  <button id="button">Calculate the codes</button>
+  <br>
+  <h2 id="output1"></h2>
+  <h2 id="output2"></h2>
+
+  <script type="text/python" src="../tevehack.py" id="tevehack"></script>
+  <script type="text/python" id="test_script">
+    from tevehack import ProfessionRank, save, load, save2, load2, Item
+    from browser import document
+
+    def calculate_codes(event):
+        # hero = load('3PxA-a)Ek-U*6[-WQnm-d7Qa-yFpU-<PU3-Z5ep-q<C')
+        hero = load(document["input1"].value)
+        hero.heroXP = 99999999
+        hero.locationX = -10000
+        hero.locationY = 8000
+        document["output1"].clear()
+        document["output1"].text = '-load ' + save(hero, 'Fingon')
+
+        # res = load2('kEF5-2d+d-o2<L-hW<T-R>D?-faQV-wU>U->]Bh-(Q*x-r<)N-TQX')
+        res = load2(document["input2"].value)
+        res.gold = 9999999
+        res.lumber = 300
+        document["output2"].clear()
+        document["output2"].text = '-load2 ' + save2(res, 'Fingon')
+
+    document["button"].bind("click", calculate_codes)
+  </script>
+</body>
+
+</html>
