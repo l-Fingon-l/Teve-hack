@@ -40661,7 +40661,7 @@ function Jkr takes player Qkr,string Wkr,string Ekr returns nothing
                     set K9 = K9 - 1
                     return
                 endif
-                if not kh then
+                if not kh then // kh true => saveload system is disabled
                     call Vpi(qU,Zkr,"when calling add in NpcHandler, line 286")
                     set Hkr = SU
                     set Akr = q4t("when calling alloc_CallbackSingle_doAfter_NpcHandler in NpcHandler, line 287")
