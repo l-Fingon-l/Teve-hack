@@ -595,6 +595,9 @@ def mFr():  # Init function2, takes nothing returns nothing
     oU[lU] = Zw
     OU[lU] = Uw
 
+    for i in range(1, 21):
+        au[i] = -1
+
 
 def encode():  # takes nothing returns string
     lWw = len(hu)  # local integer
@@ -837,19 +840,25 @@ def decode(dWw: str):  # takes string dWw returns boolean
         if fWw < len(FWw):
             TWw = fWw
         GWw += 1
-        au[GWw] = int(FWw[RWw: fWw])
+        try:
+            au[GWw] = int(FWw[RWw: fWw])
+        except ValueError:
+            return False
         RWw = fWw + 1
         fWw += 1
         if fWw >= len(FWw):
             break
     RWw = tWw(FWw[:TWw])
     nu = GWw - 1
-    if RWw == au[GWw]:
-        return True
-    return False
+    # if RWw == au[GWw]:
+    #     return True
+    # return False
+    # return True
+
+    return validate()
 
 
-def tWw(wWw: str):  # takes string wWw returns integer
+def tWw(wWw: str):  # takes string wWw returns integer, calculates the hash
     uWw = 0  # local integer
     rWw = 0  # local integer
     sWw = player_name  # local string
@@ -873,8 +882,7 @@ def Cjw(Xjw: str):  # takes string Xjw returns boolean
     if not Fu:
         hu = hu.upper()
         Xjw = Xjw.upper()
-    decode(Xjw) # it always returns True at this point. Might be changed later
-    return True
+    return decode(Xjw)
 
 
 def tkr(ukr: str):  # takes string ukr returns boolean
@@ -916,6 +924,18 @@ def Oxw(oxw: int):  # takes integer oxw returns integer
         return Yu[oxw]
     return AQw(oxw)
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                       utility functions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def validate():
+    if au[6] not in range(1, 6):
+        return False
+    return True
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                              API
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def load(code: str):  # Tkr, 51129
     global Iu, nu
@@ -1034,6 +1054,10 @@ def save2(fields: ItemCodeFields, name: str):
 
     return encode()
 
+
+def encoding_version():
+    return lU + 1
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        initialization
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1041,3 +1065,16 @@ def save2(fields: ItemCodeFields, name: str):
 
 pEw()
 mFr()
+
+# don't do it, it might break the game
+def encode_danger():
+    # our_things = [0, 0, 0, 7, 1, 1, 1, 16, 163710, -8115, 2535, 39, 13, 40, 1, 41, 17, 42, 25, 171]
+    # our_things = [0, 0, 0, 447, -661, -5546, 4566, 16, 999, -170, 44400, -39, 13, -45340, 4531, 44531, 17, 42, 25, 4677, 555]
+    our_things = [0, '-']
+    for i in range(len(our_things)):
+        au[i + 1] = our_things[i]
+    nu = len(our_things)
+    hu = oU[lU]
+    print('-load ' + encode())
+
+# encode_danger()
