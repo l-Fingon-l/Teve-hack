@@ -125,6 +125,8 @@ Iu = 0
 bj_forLoopBIndex = 0
 player_name = ''
 
+keep_hash = False
+name_hash = None
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                     function definitions
@@ -768,7 +770,7 @@ def MQw(XQw: str):  # takes string returns integer (number of the character \ nu
 
 
 def decode(dWw: str):  # takes string dWw returns boolean
-    global nu
+    global nu, name_hash
     GWw = 0  # local integer
     FWw = ""  # local string
     kWw = len(hu)  # local integer
@@ -855,19 +857,23 @@ def decode(dWw: str):  # takes string dWw returns boolean
     # return False
     # return True
 
+    name_hash = RWw
     return validate()
 
 
 def tWw(wWw: str):  # takes string wWw returns integer, calculates the hash
     uWw = 0  # local integer
     rWw = 0  # local integer
-    sWw = player_name  # local string
-    if ku:
-        while True:
-            rWw += MQw(sWw[uWw: uWw + 1])
-            uWw += 1
-            if uWw >= len(sWw):
-                break
+    if keep_hash:
+        rWw += name_hash
+    else:
+        sWw = player_name  # local string
+        if ku:
+            while True:
+                rWw += MQw(sWw[uWw: uWw + 1])
+                uWw += 1
+                if uWw >= len(sWw):
+                    break
     uWw = 0
     while True:
         rWw += MQw(wWw[uWw: uWw + 1])
@@ -968,7 +974,7 @@ def load2(code: str):  # Jkr, 40635
     print("Load Successful.")
     result = ItemCodeFields(au[1], au[2], au[3], au[4])
     nu = 4
-    for i in range(1, 7):
+    for _ in range(6):
         nu += 1
         itemId = au[nu]
         nu += 1
@@ -978,7 +984,7 @@ def load2(code: str):  # Jkr, 40635
 
     result.numberOfStashItems = au[nu]
     nu += 1
-    for i in range(1, 7):
+    for _ in range(6):
         nu += 1
         itemId = au[nu]
         nu += 1
@@ -991,9 +997,12 @@ def load2(code: str):  # Jkr, 40635
     return result
 
 
-def save(fields: HeroCodeFields, name: str):
-    global hu, nu, player_name
-    player_name = name
+def save(fields: HeroCodeFields, name: str=None):
+    global hu, nu, player_name, keep_hash
+    if not name:
+        keep_hash = True
+    else:
+        player_name = name
     hu = oU[lU]
     au[1] = fields.int1
     au[2] = fields.int2
@@ -1015,13 +1024,18 @@ def save(fields: HeroCodeFields, name: str):
         au[nu] = ability.id
         nu += 1
         au[nu] = ability.level
-        
-    return encode()
+    
+    encoded = encode()
+    keep_hash = False
+    return encoded
 
 
-def save2(fields: ItemCodeFields, name: str):
-    global hu, nu, player_name
-    player_name = name
+def save2(fields: ItemCodeFields, name: str=None):
+    global hu, nu, player_name, keep_hash
+    if not name:
+        keep_hash = True
+    else:
+        player_name = name
     hu = OU[lU]
     au[1] = fields.gold
     au[2] = fields.lumber
@@ -1058,8 +1072,10 @@ def save2(fields: ItemCodeFields, name: str):
         nu += 1
         au[nu] = 0
         i -= 1
-
-    return encode()
+        
+    encoded = encode()
+    keep_hash = False
+    return encoded
 
 
 def encoding_version():
