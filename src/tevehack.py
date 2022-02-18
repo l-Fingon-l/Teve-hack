@@ -936,12 +936,9 @@ def Oxw(oxw: int):  # takes integer oxw returns integer
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def validate():
-    if au[6] not in range(1, 6):
+    if au[6] not in range(1, 7):
         return False
     return True
-
-def validate_code(code: str):
-    code.find()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                              API
@@ -1081,6 +1078,65 @@ def save2(fields: ItemCodeFields, name: str=None):
 def encoding_version():
     return lU + 1
 
+
+def load_smart(code: str, mode: int=1):
+    in_brackets = False
+    min_length = 10
+
+    if code[0] == '"' and code[len(code) - 1] == '"':
+        if len(code) < min_length:
+            print("Load Failed. The code is too short.")
+            return None
+        code = code[1: len(code) - 1]
+        in_brackets = True
+        min_length -= 2
+
+    if len(code) >= min_length:
+        if code[:6] == '-load ':
+            code = code[6:]
+        elif code[:7] == '-load2 ':
+            code = code[7:]
+            mode = 2
+    elif in_brackets:
+        print("Load Failed. The code is neither of supported types.")
+        return None
+        
+    if code[0] == ' ': code = code[1:]
+
+    if mode == 1:
+        return load(code)
+    else: return load2(code)
+
+
+def load_file(text: str):
+    # find the player_name
+    pattern = 'call Preload( "Player Name: '
+    start_pos = text.find(pattern) + len(pattern)
+    end_pos = text.find('\n', start_pos) - 3
+    if start_pos < 300 or end_pos < start_pos:  # roughly
+        print("Load Failed. The save file is invalid.")
+        return None
+    name = text[start_pos: end_pos]
+
+    # find the first code
+    pattern = 'call Preload( "-load '
+    start_pos = text.find(pattern) + len(pattern)
+    end_pos = text.find('\n', start_pos) - 3
+    if end_pos <= start_pos:  # yields neither end_pos nor start_pos is -1
+        print("Load Failed. The save file is invalid.")
+        return None
+    code1 = text[start_pos:end_pos]
+
+    # find the second code
+    pattern = 'call Preload( "-load2 '
+    start_pos = text.find(pattern) + len(pattern)
+    end_pos = text.find('\n', start_pos) - 3
+    if end_pos <= start_pos:  # yields neither end_pos nor start_pos is -1
+        print("Load Failed. The save file is invalid.")
+        return None
+    code2 = text[start_pos:end_pos]
+
+    return name, load(code1), load(code2)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        initialization
