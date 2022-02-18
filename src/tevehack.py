@@ -3,11 +3,13 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ProfessionRank = {
+    '': 0,
     'Fishing Newbie': 1,
     'Journeyman_Fisherman': 2,
     'Expert_Fisherman': 3,
     'Master_Fisherman': 4,
     'Legendary_Fisherman': 5,
+    0: '',
     1: 'Fishing Newbie',
     2: 'Journeyman_Fisherman',
     3: 'Expert_Fisherman',
@@ -857,7 +859,7 @@ def decode(dWw: str):  # takes string dWw returns boolean
     # return False
     # return True
 
-    name_hash = RWw
+    name_hash = au[GWw] - RWw
     return validate()
 
 
@@ -936,7 +938,7 @@ def Oxw(oxw: int):  # takes integer oxw returns integer
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def validate():
-    if au[6] not in range(1, 7):
+    if au[6] not in range(6):
         return False
     return True
 
@@ -1100,7 +1102,7 @@ def load_smart(code: str, mode: int=1):
     elif in_brackets:
         print("Load Failed. The code is neither of supported types.")
         return None
-        
+
     if code[0] == ' ': code = code[1:]
 
     if mode == 1:
