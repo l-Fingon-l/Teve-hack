@@ -58,44 +58,44 @@ ProfessionRank = {
 
 class Ability:
     def __init__(self, id, level):
-        self.id = id
-        self.level = level
+        self.id: int = id
+        self.level: int = level
 
 
 class Item:
     def __init__(self, id, amount):
-        self.id = id
-        self.amount = amount
+        self.id: int = id
+        self.amount: int = amount
 
 
 class HeroCodeFields:
     def __init__(self, int1, int2, food, professionLvl, hasFishingRod,
         professionRank, int3, heroID, heroXP, locationX, locationY):
-        self.int1 = int1
-        self.int2 = int2
-        self.food = food
-        self.professionLvl = professionLvl
-        self.hasFishingRod = hasFishingRod
-        self.professionRank = professionRank
-        self.int3 = int3
-        self.heroID = heroID
-        self.heroXP = heroXP
-        self.locationX = locationX
-        self.locationY = locationY
-        self.abilities = []
-        self.checksum = 0
+        self.int1: int = int1
+        self.int2: int = int2
+        self.food: int = food
+        self.professionLvl: int = professionLvl
+        self.hasFishingRod: int = hasFishingRod
+        self.professionRank: str = professionRank
+        self.int3: int = int3
+        self.heroID: int = heroID
+        self.heroXP: int = heroXP
+        self.locationX: int = locationX
+        self.locationY: int = locationY
+        self.abilities: list = []
+        self.checksum: int = 0
 
 
 class ItemCodeFields:
     def __init__(self, gold, lumber, pvpPoints, numberOfItems):
-        self.gold = gold
-        self.lumber = lumber
-        self.pvpPoints = pvpPoints
-        self.numberOfItems = numberOfItems
-        self.items = []
-        self.numberOfStashItems = 0
-        self.stashItems = []
-        self.checksum = 0
+        self.gold: int = gold
+        self.lumber: int = lumber
+        self.pvpPoints: int = pvpPoints
+        self.numberOfItems: int = numberOfItems
+        self.items: list = []
+        self.numberOfStashItems: int = 0
+        self.stashItems: list = []
+        self.checksum: int = 0
     
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -924,6 +924,7 @@ def Oxw(oxw: int):  # takes integer oxw returns integer
         return Yu[oxw]
     return AQw(oxw)
 
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                       utility functions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -932,6 +933,9 @@ def validate():
     if au[6] not in range(1, 6):
         return False
     return True
+
+def validate_code(code: str):
+    code.find()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                              API
@@ -996,7 +1000,10 @@ def save(fields: HeroCodeFields, name: str):
     au[3] = fields.food
     au[4] = fields.professionLvl
     au[5] = fields.hasFishingRod
-    au[6] = ProfessionRank[fields.professionRank]
+    try:
+        au[6] = ProfessionRank[fields.professionRank]
+    except KeyError:
+        return None
     au[7] = 1
     au[8] = fields.heroID
     au[9] = fields.heroXP
@@ -1058,10 +1065,10 @@ def save2(fields: ItemCodeFields, name: str):
 def encoding_version():
     return lU + 1
 
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        initialization
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 pEw()
 mFr()
