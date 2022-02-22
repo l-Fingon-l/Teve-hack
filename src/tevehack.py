@@ -1085,7 +1085,8 @@ def load_smart(code: str, mode: int=1):
     in_brackets = False
     min_length = 10
 
-    if code[0] == '"' and code[len(code) - 1] == '"':
+    if code[0] == '"' and code[len(code) - 1] == '"' or \
+        code[0] == "'" and code[len(code) - 1] == "'":
         if len(code) < min_length:
             print("Load Failed. The code is too short.")
             return None
