@@ -19,6 +19,7 @@ def scan(directory, IDs):
 
 
 def scan_names(f, IDs):
+    res = []
     text = open(f, 'rb').read() # 'files/File00000288.xxx'
     for i in range(len(IDs)):
         number = IDs[i]
@@ -29,11 +30,14 @@ def scan_names(f, IDs):
             end = text.find(0, start)
             name = str(text[start:end])
             name = name[2:len(name) - 1]
-            print(str(i + 1) + ') ' + name)
+            # res += str(i + 1) + ') ' + name  + '\n'
+            res.insert(i, name)
         i += 1
+    return res
 
 
 def scan_items(f, IDs):
+    res = []
     text = open(f, 'rb').read() # 'files/File00000288.xxx'
     for i in range(len(IDs)):
         number = IDs[i]
@@ -48,8 +52,10 @@ def scan_items(f, IDs):
                 end = text.find(0, start)
             name = str(text[start:end])
             name = name[2:len(name) - 1]
-            print(str(i + 1) + ') ' + name)
+            # res += str(i + 1) + ') ' + name + '\n'
+            res.insert(i, name)
         i += 1
+    return res
 
 
 directory = 'files'
@@ -268,6 +274,15 @@ item_IDs = [
 ]
 
 # scan(directory, item_IDs)
-scan_names('files/File00000288.xxx', IDs)
-print()
-scan_items('files/File00000306.xxx', item_IDs)
+# print(scan_names('files/File00000288.xxx', IDs) + '\n' +
+#     scan_items('files/File00000306.xxx', item_IDs))
+
+f = open('items.txt', 'w')
+for item in scan_items('files/File00000306.xxx', item_IDs):
+    f.write('<option value="' + item + '">\n')
+f.close()
+
+f = open('names.txt', 'w')
+for name in scan_names('files/File00000288.xxx', IDs):
+    f.write('<option value="' + name + '">\n')
+f.close()
