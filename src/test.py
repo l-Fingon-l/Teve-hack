@@ -5,7 +5,8 @@ from tevehack import ProfessionRank, load_smart, save, load, save2, load2, Item
 #     hero.heroID = i + 1
 #     print('-load ' + save(hero))
 
-hero = load('3PxA-a)Ek-U*o)-<O7n-vf)T-wA.q-skAO-7V4t-C<Z')
+hero = load(input('code: '))
+# hero = load('3PxA-a)Ek-U*o)-<O7n-vf)T-wA.q-skAO-7V4t-C<Z')
 # hero = load('[XE<-ZU3!-hLMg-!LYS-]T&a')
 # hero = load_smart(' 3PxA-a)Ek-U*6[-WQnm-d7Qa-yFpU-<PU3-Z5ep-q<C')
 # hero = load_smart('   ')
