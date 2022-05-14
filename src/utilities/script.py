@@ -273,16 +273,27 @@ item_IDs = [
     1229210963
 ]
 
+def html_items():
+    for i in range(1, 7):
+        print(f'\
+        <div class="relative col-span-3 xl:col-span-2 flex flex-col items-center justify-center">\n\
+            <input list="items" id="item-{i}" class="w-48" />\n\
+            <input type="number" id="item-{i}-count" step="1" min="1" class="w-16 m-1 align-self-end" />\n\
+        </div>\n\n')
+
+
 # scan(directory, item_IDs)
 # print(scan_names('files/File00000288.xxx', IDs) + '\n' +
 #     scan_items('files/File00000306.xxx', item_IDs))
 
-f = open('items.txt', 'w')
-for item in scan_items('files/File00000306.xxx', item_IDs):
-    f.write('<option value="' + item + '">\n')
-f.close()
+# f = open('items.txt', 'w')
+# for item in scan_items('files/File00000306.xxx', item_IDs):
+#     f.write('<option value="' + item + '">\n')
+# f.close()
+# 
+# f = open('names.txt', 'w')
+# for name in scan_names('files/File00000288.xxx', IDs):
+#     f.write('<option value="' + name + '">\n')
+# f.close()
 
-f = open('names.txt', 'w')
-for name in scan_names('files/File00000288.xxx', IDs):
-    f.write('<option value="' + name + '">\n')
-f.close()
+html_items()
