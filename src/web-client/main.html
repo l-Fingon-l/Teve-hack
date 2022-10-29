@@ -6,14 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="tailwind/build.css">
   <script type="text/javascript" src="brython/brython.js"></script>
+  <script type="text/javascript" src="brython/brython_stdlib.js"></script>
 </head>
 
-<body onload="brython(1)" class="min-h-screen w-screen bg-emerald-100 selection:bg-emerald-600 selection:text-emerald-50">
+<body onload="brython(1)" class="min-h-screen w-screen overflow-x-hidden bg-emerald-100 selection:bg-emerald-600 selection:text-emerald-50" style="min-width: 260px;">
   
   <div class="flex flex-col items-center justify-center gap-4">
-    
+
+                                      <!-- Drop Save Field -->
     <section class="relative mt-6 h-28 w-7/12">
-      <svg xmlns="http://www.w3.org/2000/svg" class="absolute w-full h-full bg-emerald-200 rounded-xl" fill="none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="absolute h-full w-full rounded-xl bg-emerald-200 border-dashed border-2 border-emerald-300" fill="none">
         <defs>
           <pattern id="upload-field-bg" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
             <path class="text-emerald-500" fill="currentColor" fill-opacity="0.4" d="M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z" />
@@ -22,112 +24,183 @@
         <rect x="0" y="0" width="1920" class="h-full" fill="url(#upload-field-bg)" />
       </svg>
       <div class="absolute inset-0 flex items-center justify-center">
-        <p class="w-full text-center select-none text-lg font-mono text-emerald-600">Drop your save here</p>
+        <p class="w-full select-none text-center font-mono text-lg text-emerald-600">Drop your save here</p>
       </div>
     </section>
 
-    <div class="relative shrink-0 flex justify-center items-center">
+                                        <!-- Advanced Mode Button -->
+    <div class="relative flex shrink-0 items-center justify-center">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
       </svg>
-      <p class="font-sans select-none text-lg pr-1 relative -top-0.5">advanced mode</p>
-      <input type="checkbox" id="advanced_mode" class="ml-1">
+      <p class="relative -top-0.5 select-none pr-1 font-sans text-lg">advanced mode</p>
+      <input type="checkbox" id="advanced_mode" class="ml-1 accent-emerald-600" />
     </div>
 
-    <section class="grid grid-cols-2 gap-4 w-full">
+    <section class="grid w-full grid-cols-2 gap-4">
 
-      <div class="col-span-full flex justify-around items-center">
-        <div class="relative w-1/3 flex justify-evenly items-center gap-5">
-          <input id="HeroCode" type="text" spellcheck="false"
-            class="peer bg-emerald-100 h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-emerald-600"
-            placeholder=" " />
-          <label for="HeroCode"
-            class="absolute font-semibold left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Hero
-            Code</label>
+                                         <!-- Code Fields -->
+      <div class="col-span-full flex items-center justify-around flex-wrap gap-5">
+        <div class="relative flex w-1/3 items-center justify-evenly gap-5 min-w-max mx-4">
+          <input id="HeroCode" type="text" spellcheck="false" class="peer h-10 w-full border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <label for="HeroCode" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600">Hero Code</label>
 
-          <div class="relative group">
-            <div class="absolute -inset-0.5 bg-emerald-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-            <button class="relative px-2 py-2 bg-emerald-200 opacity-85 rounded-lg leading-none flex items-center divide-x divide-gray-600">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-800 group-hover:text-emerald-500 transition duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div class="group relative">
+            <div class="animate-tilt absolute -inset-0.5 rounded-lg bg-emerald-600 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+            <button class="opacity-85 relative flex items-center divide-x divide-gray-600 rounded-lg bg-emerald-200 px-2 py-2 leading-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-800 transition duration-200 group-hover:text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
             </button>
           </div>
         </div>
 
-        <div class="relative w-1/3 flex justify-evenly items-center gap-5">
-          <input id="ItemsCode" type="text" spellcheck="false"
-            class="peer bg-emerald-100 h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-emerald-600"
-            placeholder=" " />
-          <label for="ItemsCode"
-            class="absolute font-semibold left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Items
-            Code</label>
+        <div class="relative flex w-1/3 items-center justify-evenly gap-5 min-w-max mx-4">
+          <input id="ItemsCode" type="text" spellcheck="false" class="peer h-10 w-full border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <label for="ItemsCode" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600">Items Code</label>
 
-          <div class="relative group">
-            <div class="absolute -inset-0.5 bg-emerald-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-            <button class="relative px-2 py-2 bg-emerald-200 opacity-85 rounded-lg leading-none flex items-center divide-x divide-gray-600">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-800 group-hover:text-emerald-500 transition duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div class="group relative">
+            <div class="animate-tilt absolute -inset-0.5 rounded-lg bg-emerald-600 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
+            <button class="opacity-85 relative flex items-center divide-x divide-gray-600 rounded-lg bg-emerald-200 px-2 py-2 leading-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-800 transition duration-200 group-hover:text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
             </button>
           </div>
         </div>
-        
       </div>
 
+                                           <!-- Player Name -->
       <div class="col-span-full flex items-center justify-center">
         <div class="relative ml-20">
-          <label for="player_name" class="font-semibold text-gray-600 text-sm">Player Name:</label>
-          <input id="player_name" type="text" spellcheck="false"
-            class="peer bg-emerald-100 h-10 w-40 border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-emerald-600 "
-            placeholder="        (change to)" />
+          <label for="player_name" class="text-sm font-semibold text-gray-600">Player Name:</label>
+          <input id="player_name" type="text" spellcheck="false" class="peer h-10 w-40 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 focus:border-emerald-600 focus:outline-none" placeholder="        (change to)" />
         </div>
       </div>
 
-      <div class="relative col-span-full md:col-span-1">
-        <p>x</p>
+                                          <!-- Hero Code -->
+      <div class="col-span-full md:col-span-1 grid grid-cols-2 gapx-4">
+        <div class="col-span-full sm:col-span-1 justify-self-center">
+          <div class="mx-5">
+            <p class="mx-2 text-sm font-semibold text-gray-600">Profession rank</p>
+            <input list="profession-rank" id="profession-rank-input" spellcheck="false" class="w-44 md:w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          </div>
+          <div class="relative m-5">
+            <input id="prof-lvl" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+            <label for="prof-lvl" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> Profession lvl</label>
+          </div>
+        </div>
+
+        <div class="col-span-full sm:col-span-1 justify-self-center">
+          <div class="mx-5">
+            <p class="mx-2 text-sm font-semibold text-gray-600">Hero</p>
+            <input list="characters" id="hero" spellcheck="false" class="w-40 md:w-44 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          </div>
+          <div class="relative m-5">
+            <input id="xp" type="number" class="peer h-10 w-1/4 md:w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+            <label for="xp" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> XP</label>
+          </div>
+        </div>
+
+                                                <!-- Map -->
+        <h2 class="col-span-6 text-center font-mono text-xl">Coordinates</h2>
+
+        <div class="col-span-full justify-self-center mx-2">
+          <div class="relative inline-block">
+            <img id="map" src="../../teveFMapOverview_all.png" alt="map" class="rounded-lg block max-w-full h-auto">
+            <svg id="map_svg" xmlns="http://www.w3.org/2000/svg" class="absolute top-0 left-0 w-full h-full"></svg>
+          </div>  
+          
+          <div class="flex">
+            <div class="relative m-4">
+              <input id="coordinate-x" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+              <label for="coordinate-x" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> X</label>
+            </div>
+            <div class="relative m-4">
+              <input id="coordinate-y" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+              <label for="coordinate-y" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> Y</label>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="col-span-full md:col-span-1 grid grid-cols-6 gap-4 items-center justify-center">
-        <div class="relative m-5 col-span-2">
-          <input id="gold" type="number"
-            class="peer bg-emerald-100 h-10 w-1/2 border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-emerald-600 "
-            placeholder=" " />
-          <label for="gold" class="absolute font-semibold left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
-            gold</label>
+                                            <!-- Items Code -->
+      <div class="col-span-full md:col-span-1 grid grid-cols-6 items-start gap-4">
+        <div class="relative col-span-2 m-5">
+          <input id="gold" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <label for="gold" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> gold</label>
+        </div>
+
+        <div class="relative col-span-2 m-5">
+          <input id="shards" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <label for="shards" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> shards</label>
+        </div>
+
+        <div class="relative col-span-2 m-5">
+          <input id="pvp_points" type="number" class="peer h-10 w-2/3 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <label for="pvp_points" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> pvp points</label>
+        </div>
+
+                                             <!-- Items -->
+        <h2 class="col-span-6 text-center font-mono text-xl">Items</h2>
+
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="item-1" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="item-1-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="item-2" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="item-2-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="item-3" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="item-3-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="item-4" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="item-4-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="item-5" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="item-5-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="item-6" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="item-6-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
         </div>
         
-        <div class="relative m-5 col-span-2">
-          <input id="shards" type="number"
-            class="peer bg-emerald-100 h-10 w-1/2 border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-emerald-600 "
-            placeholder=" " />
-          <label for="shards" class="absolute font-semibold left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
-            shards</label>
+                                        <!-- Stash Items -->
+        <h2 class="col-span-6 text-center font-mono text-xl">Stash Items</h2>
+
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="stash-item-1" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="stash-item-1-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
         </div>
-
-        <div class="relative m-5 col-span-2">
-          <input id="pvp_points" type="number"
-            class="peer bg-emerald-100 h-10 w-2/3 border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-emerald-600 "
-            placeholder=" " />
-          <label for="pvp_points" class="absolute font-semibold left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
-            pvp points</label>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="stash-item-2" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="stash-item-2-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
         </div>
-
-        <h2 class="col-span-6 font-mono text-center text-xl">Items</h2>
-
-        <div class="relative col-span-3 xl:col-span-2 flex flex-col items-center justify-center">
-          <input list="items" id="item-1" spellcheck="false" class="w-48 border-2 text-emerald-900 border-emerald-100 rounded-md focus:ring-1 focus:border-emerald-300 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" />
-          <input type="number" id="item-1-count" step="1" min="1" class="w-16 m-1 text-center border-2 font-mono text-emerald-900 border-emerald-100 rounded-md focus:ring-1 focus:border-emerald-300 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500 align-self-end" />
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="stash-item-3" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="stash-item-3-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
         </div>
-
-        
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="stash-item-4" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="stash-item-4-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="stash-item-5" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="stash-item-5-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
+        <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
+          <input list="items" id="stash-item-6" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id=stash-"item-6-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+        </div>
       </div>
-
     </section>
-
   </div>
 
+                                <!-- Data -->
   <datalist id="items">
     <option value="Fine Sword">
     <option value="Plated Shield">
@@ -341,6 +414,32 @@
     <option value="Summoner">      
   </datalist>
 
+  <datalist id="profession-rank">
+    <option value="Unranked">
+    <option value="Fishing Newbie">
+    <option value="Journeyman Fisherman">
+    <option value="Expert Fisherman">
+    <option value="Master Fisherman">
+    <option value="Legendary Fisherman">
+  </datalist>
+
+                               <!-- Glue JavaScript -->
+  <script type="text/javascript">
+      function Rectangle(e) { return e.target.getBoundingClientRect(); }
+      function createMark(x, y, side) {
+        const svg = document.getElementById("map_svg");
+        svg.replaceChildren();
+        svg.innerHTML +=`<image 
+        x="${x - side/2}"
+        y="${y - side/2}"
+        width="${side}"
+        height="${side}"
+        href="mark.svg" />`
+      }
+  </script>
+                                 <!-- Brython -->
+  <script type="text/python" src="../tevehack.py" id="tevehack"></script>
+  <script type="text/python" src="brython/frontend.py" id="frontend"></script>
 </body>
 
 </html>

@@ -1,4 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* npx tailwindcss -i ./src/web-client/input.css -o ./dist/output.css --watch */
+/* tailwindcss -i src/web-client/tailwind/input.css -o src/web-client/tailwind/build.css --watch */
+/* tailwindcss -i src/web-client/tailwind/input.css -o dist/style.css --minify */
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4cb561;
+}
