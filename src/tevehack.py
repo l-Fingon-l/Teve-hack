@@ -3,13 +3,13 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ProfessionRank = {
-    '': 0,
+    'Never caught a fish': 0,
     'Fishing Newbie': 1,
     'Journeyman_Fisherman': 2,
     'Expert_Fisherman': 3,
     'Master_Fisherman': 4,
     'Legendary_Fisherman': 5,
-    0: '',
+    0: 'Never caught a fish',
     1: 'Fishing Newbie',
     2: 'Journeyman_Fisherman',
     3: 'Expert_Fisherman',
@@ -72,13 +72,15 @@ class Item:
 
 class HeroCodeFields:
     def __init__(self, int1, int2, food, professionLvl, hasFishingRod,
-        professionRank, int3, heroID, heroXP, locationX, locationY):
+        professionRank, revivalLocation, imp5Stage, int3, heroID, heroXP, locationX, locationY):
         self.int1: int = int1
         self.int2: int = int2
         self.food: int = food
         self.professionLvl: int = professionLvl
         self.hasFishingRod: int = hasFishingRod
         self.professionRank: str = professionRank
+        self.revivalLocation: int = revivalLocation
+        self.imp5Stage: int = imp5Stage
         self.int3: int = int3
         self.heroID: int = heroID
         self.heroXP: int = heroXP
@@ -89,10 +91,11 @@ class HeroCodeFields:
 
 
 class ItemCodeFields:
-    def __init__(self, gold, lumber, pvpPoints, numberOfItems):
+    def __init__(self, gold, lumber, pvpPoints, numberOfItems, unlockedCritterTiers):
         self.gold: int = gold
         self.lumber: int = lumber
         self.pvpPoints: int = pvpPoints
+        self.unlockedCritterTiers: int = unlockedCritterTiers
         self.numberOfItems: int = numberOfItems
         self.items: list = []
         self.numberOfStashItems: int = 0
@@ -598,8 +601,14 @@ def mFr():  # Init function2, takes nothing returns nothing
     lU += 1
     oU[lU] = Zw
     OU[lU] = Uw
+    lU += 1
+    oU[lU] = "t[nFb&G.)jKp5Hw?8,JzqCy7_fQ*co6Sar2T>v#ZOWghsEY!VLx9(kP3NXABD+m]uR<eMd4U"
+    OU[lU] = "ObmBvgUt5d87ERw3Mfza!+2sVc#AnqY[XokG9P4*yu(hJNHFQpj.T,<ZKe>)_CSDLxWr?6]"
+    lU += 1
+    oU[lU] = "!gWY2tqxeA,Q?aT8&N9Fd6kOm]*)XscB+fZRHnEy[wM5GP#p(z<SLbCKjU_u73hDVr>vo4J"
+    OU[lU] = "AZf!N[8qLhzUgCwntGW9SyDb_Pd3Qc?kM4KjvVmeJu*ap65+Y)F,BHROX<#(r]>Exs7To2"
 
-    for i in range(1, 21):
+    for i in range(1, 24):
         au[i] = -1
 
 
@@ -955,9 +964,9 @@ def load(code: str):  # Tkr, 51129
 
     print("Load Successful.")
     result = HeroCodeFields(au[1], au[2], au[3], au[4], au[5], ProfessionRank[au[6]],
-                            au[7], au[8], au[9], au[10], au[11])
-    for i in range(int((nu - 11) / 2)):
-        result.abilities.append(Ability(au[12 + 2 * i], au[13 + 2 * i]))
+                            au[7], au[8], au[9], au[10], au[11], au[12], au[13])
+    for i in range(int((nu - 13) / 2)):
+        result.abilities.append(Ability(au[14 + 2 * i], au[15 + 2 * i]))
     result.checksum = au[nu + 1]
 
     return result
@@ -971,8 +980,8 @@ def load2(code: str):  # Jkr, 40635
         return None
 
     print("Load Successful.")
-    result = ItemCodeFields(au[1], au[2], au[3], au[4])
-    nu = 4
+    result = ItemCodeFields(au[1], au[2], au[3], au[4], au[5])
+    nu = 5
     for _ in range(6):
         nu += 1
         itemId = au[nu]
@@ -1012,12 +1021,14 @@ def save(fields: HeroCodeFields, name: str=None):
         au[6] = ProfessionRank[fields.professionRank]
     except KeyError:
         return None
-    au[7] = 1
-    au[8] = fields.heroID
-    au[9] = fields.heroXP
-    au[10] = fields.locationX
-    au[11] = fields.locationY
-    nu = 11
+    au[7] = fields.revivalLocation
+    au[8] = fields.imp5Stage
+    au[9] = 1
+    au[10] = fields.heroID
+    au[11] = fields.heroXP
+    au[12] = fields.locationX
+    au[13] = fields.locationY
+    nu = 13
     for ability in fields.abilities:
         nu += 1
         au[nu] = ability.id
@@ -1039,8 +1050,9 @@ def save2(fields: ItemCodeFields, name: str=None):
     au[1] = fields.gold
     au[2] = fields.lumber
     au[3] = fields.pvpPoints
-    au[4] = fields.numberOfItems
-    nu = 4
+    au[4] = fields.unlockedCritterTiers
+    au[5] = fields.numberOfItems
+    nu = 5
 
     i = 6
     for item in fields.items:
