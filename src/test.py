@@ -1,11 +1,15 @@
-from tevehack import ProfessionRank, load_smart, save, load, save2, load2, Item
+from tevehack import ProfessionRank, load_smart, save, load, save2, load2, Item, HeroCodeFields
 
 # hero = load('[XE<-ZU3!-hLMg-!LYS-]T&a')
 # for i in range(0x34):
 #     hero.heroID = i + 1
 #     print('-load ' + save(hero))
 
-hero = load(input('code: '))
+hero = HeroCodeFields(int1=2, int2=1, food=1, professionLvl = 0, hasFishingRod = 0,
+    professionRank=0, revivalLocation=0, imp5Stage=0, int3=1, heroID=1, heroXP=0, locationX=0, locationY=0)
+print('-load ' + save(hero))
+print('-load ' + save(hero, ''))
+exit()
 # hero = load('3PxA-a)Ek-U*o)-<O7n-vf)T-wA.q-skAO-7V4t-C<Z')
 # hero = load('[XE<-ZU3!-hLMg-!LYS-]T&a')
 # hero = load_smart(' 3PxA-a)Ek-U*6[-WQnm-d7Qa-yFpU-<PU3-Z5ep-q<C')

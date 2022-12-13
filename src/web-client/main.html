@@ -14,7 +14,7 @@
   <div class="flex flex-col items-center justify-center gap-4">
 
                                       <!-- Drop Save Field -->
-    <section class="relative mt-6 h-28 w-7/12">
+    <section id="upload-field" class="relative mt-6 h-28 w-7/12">
       <svg xmlns="http://www.w3.org/2000/svg" class="absolute h-full w-full rounded-xl bg-emerald-200 border-dashed border-2 border-emerald-300" fill="none">
         <defs>
           <pattern id="upload-field-bg" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -23,7 +23,7 @@
         </defs>
         <rect x="0" y="0" width="1920" class="h-full" fill="url(#upload-field-bg)" />
       </svg>
-      <div class="absolute inset-0 flex items-center justify-center">
+      <div  class="absolute inset-0 flex items-center justify-center">
         <p class="w-full select-none text-center font-mono text-lg text-emerald-600">Drop your save here</p>
       </div>
     </section>
@@ -42,12 +42,12 @@
                                          <!-- Code Fields -->
       <div class="col-span-full flex items-center justify-around flex-wrap gap-5">
         <div class="relative flex w-1/3 items-center justify-evenly gap-5 min-w-max mx-4">
-          <input id="HeroCode" type="text" spellcheck="false" class="peer h-10 w-full border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <input id="HeroCode" type="text" spellcheck="false" class="peer h-10 w-full border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder=" " />
           <label for="HeroCode" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600">Hero Code</label>
 
           <div class="group relative">
             <div class="animate-tilt absolute -inset-0.5 rounded-lg bg-emerald-600 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-            <button class="opacity-85 relative flex items-center divide-x divide-gray-600 rounded-lg bg-emerald-200 px-2 py-2 leading-none">
+            <button id="HeroCodeButton" class="opacity-85 relative flex items-center divide-x divide-gray-600 rounded-lg bg-emerald-200 px-2 py-2 leading-none">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-800 transition duration-200 group-hover:text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
@@ -61,7 +61,7 @@
 
           <div class="group relative">
             <div class="animate-tilt absolute -inset-0.5 rounded-lg bg-emerald-600 opacity-75 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-            <button class="opacity-85 relative flex items-center divide-x divide-gray-600 rounded-lg bg-emerald-200 px-2 py-2 leading-none">
+            <button id="ItemsCodeButton" class="opacity-85 relative flex items-center divide-x divide-gray-600 rounded-lg bg-emerald-200 px-2 py-2 leading-none">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-800 transition duration-200 group-hover:text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
@@ -74,7 +74,7 @@
       <div class="col-span-full flex items-center justify-center">
         <div class="relative ml-20">
           <label for="player_name" class="text-sm font-semibold text-gray-600">Player Name:</label>
-          <input id="player_name" type="text" spellcheck="false" class="peer h-10 w-40 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 focus:border-emerald-600 focus:outline-none" placeholder="        (change to)" />
+          <input id="player_name" type="text" spellcheck="false" class="peer h-10 w-40 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder="        (change to)" />
         </div>
       </div>
 
@@ -86,7 +86,7 @@
             <input list="profession-rank" id="profession-rank-input" spellcheck="false" class="w-44 md:w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
           </div>
           <div class="relative m-5">
-            <input id="prof-lvl" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+            <input id="prof-lvl" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder=" " />
             <label for="prof-lvl" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> Profession lvl</label>
           </div>
         </div>
@@ -113,11 +113,11 @@
           
           <div class="flex">
             <div class="relative m-4">
-              <input id="coordinate-x" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+              <input id="coordinate-x" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder=" " />
               <label for="coordinate-x" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> X</label>
             </div>
             <div class="relative m-4">
-              <input id="coordinate-y" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+              <input id="coordinate-y" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder=" " />
               <label for="coordinate-y" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> Y</label>
             </div>
           </div>
@@ -127,17 +127,17 @@
                                             <!-- Items Code -->
       <div class="col-span-full md:col-span-1 grid grid-cols-6 items-start gap-4">
         <div class="relative col-span-2 m-5">
-          <input id="gold" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <input id="gold" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder=" " />
           <label for="gold" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> gold</label>
         </div>
 
         <div class="relative col-span-2 m-5">
-          <input id="shards" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <input id="shards" type="number" class="peer h-10 w-1/2 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder=" " />
           <label for="shards" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> shards</label>
         </div>
 
         <div class="relative col-span-2 m-5">
-          <input id="pvp_points" type="number" class="peer h-10 w-2/3 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none" placeholder=" " />
+          <input id="pvp_points" type="number" class="peer h-10 w-2/3 border-b-2 border-gray-300 bg-emerald-100 text-gray-900 placeholder-transparent focus:border-emerald-600 focus:outline-none invalid:border-rose-400 invalid:focus:border-rose-500" placeholder=" " />
           <label for="pvp_points" class="absolute left-0 -top-3.5 text-sm font-semibold text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"> pvp points</label>
         </div>
 
@@ -194,7 +194,7 @@
         </div>
         <div class="relative col-span-full flex flex-col items-center justify-center xl:col-span-2 sm:col-span-3">
           <input list="items" id="stash-item-6" spellcheck="false" class="w-48 rounded-md border-2 border-emerald-100 text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
-          <input type="number" id=stash-"item-6-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
+          <input type="number" id="stash-item-6-count" step="1" min="1" class="align-self-end m-1 w-16 rounded-md border-2 border-emerald-100 text-center font-mono text-emerald-900 invalid:border-rose-400 focus:border-emerald-300 focus:outline-none focus:ring-1 invalid:focus:border-rose-500" />
         </div>
       </div>
     </section>
@@ -329,7 +329,8 @@
     <option value="Trout">
     <option value="Tuna">
     <option value="Yellowskin Bass">
-    <option value="Inspirit">
+    <option value="Faded Inspirit">
+    <option value="Glowing Inspirit">
     <option value="Faith">
     <option value="Fate">
     <option value="Raising Heart">
@@ -339,6 +340,7 @@
     <option value="Whirlwind">
     <option value="Hope">
     <option value="Potion of Restoration">
+    <option value="Raven's Insight">
     <option value="The Grandfather">
     <option value="The Patriarch">
     <option value="Atlantean's Frozen Heart">
@@ -346,17 +348,18 @@
     <option value="Neptune's Eye">
     <option value="Atalanta's Speed">
     <option value="Black Hades">
+    <option value="Raven's Legacy">
     <option value="Hannah's Legend">
     <option value="Wrath of the Lich King">
     <option value="Blaze's Touch">
-    <option value="Raven's Insight">
     <option value="Megaera's Edge">
     <option value="Chaos Grief">
     <option value="Hellforge Plate">
     <option value="Atalanta's Revenge">
     <option value="Life Essence">
     <option value="Mana Essence">
-    <option value="The Destiny">      
+    <option value="The Destiny">
+    <option value="Stabilized Void Prism">
   </datalist>
 
   <datalist id="characters">
@@ -411,11 +414,11 @@
     <option value="Phantom Assassin">
     <option value="Professional Witcher">
     <option value="RuneMaster">
-    <option value="Summoner">      
+    <option value="Summoner">
   </datalist>
 
   <datalist id="profession-rank">
-    <option value="Unranked">
+    <option value="Never caught a fish">
     <option value="Fishing Newbie">
     <option value="Journeyman Fisherman">
     <option value="Expert Fisherman">
@@ -425,9 +428,9 @@
 
                                <!-- Glue JavaScript -->
   <script type="text/javascript">
-      function Rectangle(e) { return e.target.getBoundingClientRect(); }
+      const svg = document.getElementById("map_svg");
+      function Rectangle(e) { return e.getBoundingClientRect(); }
       function createMark(x, y, side) {
-        const svg = document.getElementById("map_svg");
         svg.replaceChildren();
         svg.innerHTML +=`<image 
         x="${x - side/2}"

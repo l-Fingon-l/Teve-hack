@@ -2,60 +2,49 @@
 #                        class declarations
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ProfessionRank = {
-    'Never caught a fish': 0,
-    'Fishing Newbie': 1,
-    'Journeyman_Fisherman': 2,
-    'Expert_Fisherman': 3,
-    'Master_Fisherman': 4,
-    'Legendary_Fisherman': 5,
-    0: 'Never caught a fish',
-    1: 'Fishing Newbie',
-    2: 'Journeyman_Fisherman',
-    3: 'Expert_Fisherman',
-    4: 'Master_Fisherman',
-    5: 'Legendary_Fisherman'
-}
-
 """
     1: integer of a PlayerID, usually == 2, but on initialization \ during loading == 0;
         there's a bug with it at 14707, 46037 and 64922, it's never == 1
     2: integer of a PlayerID, usually == 1, but on initialization == 0
     3: food used by Player (by ID)
     4: Profession level, integer of a PlayerID, during initialization \ loading == 0
-    5: Something connected to the profession (fishing). Either 1(after giving the first FishingRod),
-        or 0(when unlearning), during initialization \ loading == 0
+    5: Something connected to the profession (fishing). Either 1 (after giving the first FishingRod),
+        or 0 (when unlearning), during initialization \ loading == 0
     6: Fishing profession points (rank), during initialization \ loading == 0.
+        0 = "Never caught a fish"
         1 = "Fishing Newbie"
         2 = "Journeyman Fisherman"
         3 = "Expert Fisherman"
         4 = "Master Fisherman"
         5 = "Legendary Fisherman"
-    7: usually == 1
-    8: hash of a PlayerID's hero
-    9: Hero XP
-    10: Hero LocationX
-    11: Hero LocationY
-    12: 2*n(0-4) abilities of a PlayerID's hero:
+    7: Revival location, an integer
+    8. imp5Stage, an integer
+    9: usually == 1
+    10: hash of a PlayerID's hero
+    11: Hero XP
+    12: Hero LocationX
+    13: Hero LocationY
+    14: 2*n(0-4) abilities of a PlayerID's hero:
         1: ability index of GU array of abilities
         2: ability level
-    13: checksum
+    15: checksum
     ~~~ At this point the hero code is generated ~~~
     ~~~     Also set hu = OU[lU], set nu = 1     ~~~
     1: Gold, not more than 1010010
-    2: Lumber, not more than 477
+    2: Shards, not more than 477
     3: Some "PvP points"
-    4: inventory:
+    4: Some "Unlocked Critter Tiers"
+    5: inventory:
         1: number of items carried
         x6 items:
             1: item ID from Yu[] \ 30 if empty
             2: amount of this item if stackable \ 0 otherwise
-    5: stash inventory:
+    6: stash inventory:
         1: number of items carried
         x6 items:
             1: item ID from Yu[] \ 30 if empty
             2: amount of this item if stackable \ 0 otherwise
-    6: checksum
+    7: checksum
 """
 
 class Ability:
@@ -82,7 +71,7 @@ class HeroCodeFields:
         self.revivalLocation: int = revivalLocation
         self.imp5Stage: int = imp5Stage
         self.int3: int = int3
-        self.heroID: int = heroID
+        self.heroID: str = heroID
         self.heroXP: int = heroXP
         self.locationX: int = locationX
         self.locationY: int = locationY
@@ -91,17 +80,460 @@ class HeroCodeFields:
 
 
 class ItemCodeFields:
-    def __init__(self, gold, lumber, pvpPoints, numberOfItems, unlockedCritterTiers):
+    def __init__(self, gold, shards, pvpPoints, numberOfItems, unlockedCritterTiers):
         self.gold: int = gold
-        self.lumber: int = lumber
+        self.shards: int = shards
         self.pvpPoints: int = pvpPoints
         self.unlockedCritterTiers: int = unlockedCritterTiers
         self.numberOfItems: int = numberOfItems
-        self.items: list = []
+        self.items: dict = {}
         self.numberOfStashItems: int = 0
-        self.stashItems: list = []
+        self.stashItems: dict = {}
         self.checksum: int = 0
     
+
+
+ProfessionRank = {
+    'Never caught a fish': 0,
+    'Fishing Newbie': 1,
+    'Journeyman Fisherman': 2,
+    'Expert Fisherman': 3,
+    'Master Fisherman': 4,
+    'Legendary Fisherman': 5,
+    0: 'Never caught a fish',
+    1: 'Fishing Newbie',
+    2: 'Journeyman Fisherman',
+    3: 'Expert Fisherman',
+    4: 'Master Fisherman',
+    5: 'Legendary Fisherman'
+}
+
+Hero = {
+    "Acolyte (Male)": 1,
+    "Acolyte (Female)": 2,
+    "Archer": 3,
+    "Druid": 4,
+    "Initiate": 5,
+    "Novice (Female)": 6,
+    "Novice (Male)": 7,
+    "Swordsman": 8,
+    "Templar": 9,
+    "Thief": 10,
+    "Witch Hunter": 11,
+    "ArchDruid": 12,
+    "ArchTemplar": 13,
+    "Cleric (Male)": 14,
+    "Cleric (Female)": 15,
+    "Hunter": 16,
+    "Knight": 17,
+    "Mage": 18,
+    "Rogue": 19,
+    "Slayer": 20,
+    "Assassin": 21,
+    "Stalker": 22,
+    "Imperial Knight": 23,
+    "Crusader": 24,
+    "High Templar": 25,
+    "Dark Templar": 26,
+    "Marksman": 27,
+    "Tracker": 28,
+    "Witcher": 29,
+    "Inquisitor": 30,
+    "Priest": 31,
+    "Matriarch": 32,
+    "Wizard": 33,
+    "Sage": 34,
+    "Shaman": 35,
+    "Shapeshifter": 36,
+    "ArchSage": 37,
+    "White Wizard": 38,
+    "Hierophant": 39,
+    "Prophetess": 40,
+    "Sniper": 41,
+    "Monster Hunter": 42,
+    "Avenger": 43,
+    "Champion": 44,
+    "Dark ArchTemplar": 45,
+    "Grand Inquisitor": 46,
+    "Grand Templar": 47,
+    "Master Stalker": 48,
+    "Phantom Assassin": 49,
+    "Professional Witcher": 50,
+    "RuneMaster": 51,
+    "Summoner": 52,
+    1: "Acolyte (Male)",
+    2: "Acolyte (Female)",
+    3: "Archer",
+    4: "Druid",
+    5: "Initiate",
+    6: "Novice (Female)",
+    7: "Novice (Male)",
+    8: "Swordsman",
+    9: "Templar",
+    10: "Thief",
+    11: "Witch Hunter",
+    12: "ArchDruid",
+    13: "ArchTemplar",
+    14: "Cleric (Male)",
+    15: "Cleric (Female)",
+    16: "Hunter",
+    17: "Knight",
+    18: "Mage",
+    19: "Rogue",
+    20: "Slayer",
+    21: "Assassin",
+    22: "Stalker",
+    23: "Imperial Knight",
+    24: "Crusader",
+    25: "High Templar",
+    26: "Dark Templar",
+    27: "Marksman",
+    28: "Tracker",
+    29: "Witcher",
+    30: "Inquisitor",
+    31: "Priest",
+    32: "Matriarch",
+    33: "Wizard",
+    34: "Sage",
+    35: "Shaman",
+    36: "Shapeshifter",
+    37: "ArchSage",
+    38: "White Wizard",
+    39: "Hierophant",
+    40: "Prophetess",
+    41: "Sniper",
+    42: "Monster Hunter",
+    43: "Avenger",
+    44: "Champion",
+    45: "Dark ArchTemplar",
+    46: "Grand Inquisitor",
+    47: "Grand Templar",
+    48: "Master Stalker",
+    49: "Phantom Assassin",
+    50: "Professional Witcher",
+    51: "RuneMaster",
+    52: "Summoner"
+}
+
+ItemName = {
+    "Fine Sword": 1,
+    "Plated Shield": 2,
+    "Staff": 3,
+    "Minor Potion of Healing": 4,
+    "Minor Potion of Mana": 5,
+    "Sharp Claws": 6,
+    "Blackpowder Musket": 7,
+    "Crystal Wand": 8,
+    "Elderwood Bow": 9,
+    "Moon Armor": 10,
+    "Superior Wand": 11,
+    "FrostShield": 12,
+    "Frostfang": 13,
+    "Elder Rod": 14,
+    "Dull Warp Blade": 15,
+    "Leather Armor": 16,
+    "Lucky Amulet": 17,
+    "Potion of Health": 18,
+    "Greater Potion of Mana": 19,
+    "Psi Blade": 20,
+    "Reinforced Armor": 21,
+    "Stitches' Dagger": 22,
+    "Stitches' Totem": 23,
+    "Aiur's Legacy": 24,
+    "BlackGrave Wand": 25,
+    "Skull Staff": 26,
+    "Stitches' Legacy": 27,
+    "Clarity Potion": 28,
+    "Super Clarity Potion": 29,
+    "Potion of Super Restoration": 31,
+    "Belt of Endurance": 32,
+    "Boots of Speed": 33,
+    "Boots of the Eagle": 34,
+    "Bracers of the Bear": 35,
+    "Celestial Orb": 36,
+    "Enchanted Axe": 37,
+    "Arcane Staff": 38,
+    "Cunning Edge": 39,
+    "Firebrand": 40,
+    "Helmet of Valor": 41,
+    "Long Rifle": 42,
+    "Ring of Melitele": 43,
+    "Psionic Cuirass": 44,
+    "Scroll of the Lich": 45,
+    "Shield of the Avenger": 46,
+    "Sniper Rifle": 47,
+    "Soul Wand": 48,
+    "VanCliffe's Armor": 49,
+    "Warchief's Pride": 50,
+    "Blood Diamond": 51,
+    "Chillrend": 52,
+    "Dusk's Legacy": 53,
+    "Mythpowder Rifle": 54,
+    "Sword of Blessed Flame": 55,
+    "Scroll of Teleportation": 56,
+    "Arcane Amulet": 57,
+    "Claws of Striking": 58,
+    "Elven Armor": 59,
+    "Superior Vizima Gauntlets": 60,
+    "Circlet": 61,
+    "Sharpened Glaive": 62,
+    "Slicer": 63,
+    "Stout Shield": 64,
+    "Worn Gauntlets": 65,
+    "Horadric Staff": 66,
+    "The Executioner": 67,
+    "Windforce": 68,
+    "The Ark Royal": 71,
+    "The Spirit Shroud": 72,
+    "The Stone of Jordan": 73,
+    "Doombringer": 75,
+    "Frostbrand": 77,
+    "Homunculus": 78,
+    "Guardian Naga": 79,
+    "Death Reaver": 80,
+    "Ghost Armor": 81,
+    "Guardian Angel": 83,
+    "Hand of Blessed Light": 84,
+    "Azurewrath": 85,
+    "Synergy Blade": 86,
+    "Hand of God": 87,
+    "Psionic Stone": 88,
+    "The Psionic Razor": 89,
+    "The Heart of Evo": 90,
+    "Double-Barrel Rifle": 91,
+    "The Pendant of Nagre": 92,
+    "Lam Esen's Tome": 93,
+    "Infernostride": 94,
+    "Battle Gauntlets": 95,
+    "Atma's Defence": 96,
+    "Feral Totem": 97,
+    "Tome of Awakening": 98,
+    "Hades' Shield": 99,
+    "Bethrezen's Flame": 100,
+    "Golden Arrows": 101,
+    "Necklace of Seven Souls": 102,
+    "Stone of Vsmir": 103,
+    "Duriel's Shell": 104,
+    "Hexfire's Edge": 105,
+    "Icecrown's Visage": 106,
+    "Megaton Blades": 107,
+    "Staff of the Ages": 108,
+    "Tome of the Unlife": 109,
+    "Zakarum's Hand": 110,
+    "Angel's Sanctuary": 113,
+    "Athena's Aim": 114,
+    "Dawn's Legacy": 116,
+    "Eagle Eye": 117,
+    "Titan's Aegis": 121,
+    "Shield of Unending Flame": 123,
+    "Phoenix's Stone": 124,
+    "Good Fishing Rod": 133,
+    "Basic Fishing Rod": 134,
+    "Mastercraft Fishing Rod": 135,
+    "Mystic Fishing Rod": 136,
+    "Silver Fishing Rod": 137,
+    "Fanged Piranah": 138,
+    "Flying Wish Fish": 139,
+    "Goldskin": 140,
+    "King Bass": 141,
+    "Mutated Bluefish": 142,
+    "Rainbow Fish": 143,
+    "Salmon": 144,
+    "Thunderfish": 145,
+    "Trout": 146,
+    "Tuna": 147,
+    "Yellowskin Bass": 148,
+    "Faded Inspirit": 157,
+    "Glowing Inspirit": 186,
+    "Faith": 158,
+    "Fate": 159,
+    "Raising Heart": 160,
+    "Reinforce": 161,
+    "Rune Sihill": 162,
+    "Tooth of Belial": 163,
+    "Whirlwind": 164,
+    "Hope": 165,
+    "Potion of Restoration": 166,
+    "Raven's Insight": 177,
+    "The Grandfather": 167,
+    "The Patriarch": 168,
+    "Atlantean's Frozen Heart": 169,
+    "Atlantean's Frozen Heart": 170,
+    "Neptune's Eye": 171,
+    "Atalanta's Speed": 172,
+    "Black Hades": 173,
+    "Raven's Legacy": 187,
+    "Hannah's Legend": 174,
+    "Wrath of the Lich King": 175,
+    "Blaze's Touch": 176,
+    "Megaera's Edge": 178,
+    "Chaos Grief": 179,
+    "Hellforge Plate": 180,
+    "Atalanta's Revenge": 183,
+    "Life Essence": 181,
+    "Mana Essence": 182,
+    "The Destiny": 184,
+    "Stabilized Void Prism": 185,
+    1: "Fine Sword",
+    2: "Plated Shield",
+    3: "Staff",
+    4: "Minor Potion of Healing",
+    5: "Minor Potion of Mana",
+    6: "Sharp Claws",
+    7: "Blackpowder Musket",
+    8: "Crystal Wand",
+    9: "Elderwood Bow",
+    10: "Moon Armor",
+    11: "Superior Wand",
+    12: "FrostShield",
+    13: "Frostfang",
+    14: "Elder Rod",
+    15: "Dull Warp Blade",
+    16: "Leather Armor",
+    17: "Lucky Amulet",
+    18: "Potion of Health",
+    19: "Greater Potion of Mana",
+    20: "Psi Blade",
+    21: "Reinforced Armor",
+    22: "Stitches' Dagger",
+    23: "Stitches' Totem",
+    24: "Aiur's Legacy",
+    25: "BlackGrave Wand",
+    26: "Skull Staff",
+    27: "Stitches' Legacy",
+    28: "Clarity Potion",
+    29: "Super Clarity Potion",
+    31: "Potion of Super Restoration",
+    32: "Belt of Endurance",
+    33: "Boots of Speed",
+    34: "Boots of the Eagle",
+    35: "Bracers of the Bear",
+    36: "Celestial Orb",
+    37: "Enchanted Axe",
+    38: "Arcane Staff",
+    39: "Cunning Edge",
+    40: "Firebrand",
+    41: "Helmet of Valor",
+    42: "Long Rifle",
+    43: "Ring of Melitele",
+    44: "Psionic Cuirass",
+    45: "Scroll of the Lich",
+    46: "Shield of the Avenger",
+    47: "Sniper Rifle",
+    48: "Soul Wand",
+    49: "VanCliffe's Armor",
+    50: "Warchief's Pride",
+    51: "Blood Diamond",
+    52: "Chillrend",
+    53: "Dusk's Legacy",
+    54: "Mythpowder Rifle",
+    55: "Sword of Blessed Flame",
+    56: "Scroll of Teleportation",
+    57: "Arcane Amulet",
+    58: "Claws of Striking",
+    59: "Elven Armor",
+    60: "Superior Vizima Gauntlets",
+    61: "Circlet",
+    62: "Sharpened Glaive",
+    63: "Slicer",
+    64: "Stout Shield",
+    65: "Worn Gauntlets",
+    66: "Horadric Staff",
+    67: "The Executioner",
+    68: "Windforce",
+    71: "The Ark Royal",
+    72: "The Spirit Shroud",
+    73: "The Stone of Jordan",
+    75: "Doombringer",
+    77: "Frostbrand",
+    78: "Homunculus",
+    79: "Guardian Naga",
+    80: "Death Reaver",
+    81: "Ghost Armor",
+    83: "Guardian Angel",
+    84: "Hand of Blessed Light",
+    85: "Azurewrath",
+    86: "Synergy Blade",
+    87: "Hand of God",
+    88: "Psionic Stone",
+    89: "The Psionic Razor",
+    90: "The Heart of Evo",
+    91: "Double-Barrel Rifle",
+    92: "The Pendant of Nagre",
+    93: "Lam Esen's Tome",
+    94: "Infernostride",
+    95: "Battle Gauntlets",
+    96: "Atma's Defence",
+    97: "Feral Totem",
+    98: "Tome of Awakening",
+    99: "Hades' Shield",
+    100: "Bethrezen's Flame",
+    101: "Golden Arrows",
+    102: "Necklace of Seven Souls",
+    103: "Stone of Vsmir",
+    104: "Duriel's Shell",
+    105: "Hexfire's Edge",
+    106: "Icecrown's Visage",
+    107: "Megaton Blades",
+    108: "Staff of the Ages",
+    109: "Tome of the Unlife",
+    110: "Zakarum's Hand",
+    113: "Angel's Sanctuary",
+    114: "Athena's Aim",
+    116: "Dawn's Legacy",
+    117: "Eagle Eye",
+    121: "Titan's Aegis",
+    123: "Shield of Unending Flame",
+    124: "Phoenix's Stone",
+    133: "Good Fishing Rod",
+    134: "Basic Fishing Rod",
+    135: "Mastercraft Fishing Rod",
+    136: "Mystic Fishing Rod",
+    137: "Silver Fishing Rod",
+    138: "Fanged Piranah",
+    139: "Flying Wish Fish",
+    140: "Goldskin",
+    141: "King Bass",
+    142: "Mutated Bluefish",
+    143: "Rainbow Fish",
+    144: "Salmon",
+    145: "Thunderfish",
+    146: "Trout",
+    147: "Tuna",
+    148: "Yellowskin Bass",
+    157: "Faded Inspirit",
+    186: "Glowing Inspirit",
+    158: "Faith",
+    159: "Fate",
+    160: "Raising Heart",
+    161: "Reinforce",
+    162: "Rune Sihill",
+    163: "Tooth of Belial",
+    164: "Whirlwind",
+    165: "Hope",
+    166: "Potion of Restoration",
+    177: "Raven's Insight",
+    167: "The Grandfather",
+    168: "The Patriarch",
+    169: "Atlantean's Frozen Heart",
+    170: "Atlantean's Frozen Heart",
+    171: "Neptune's Eye",
+    172: "Atalanta's Speed",
+    173: "Black Hades",
+    187: "Raven's Legacy",
+    174: "Hannah's Legend",
+    175: "Wrath of the Lich King",
+    176: "Blaze's Touch",
+    178: "Megaera's Edge",
+    179: "Chaos Grief",
+    180: "Hellforge Plate",
+    183: "Atalanta's Revenge",
+    181: "Life Essence",
+    182: "Mana Essence",
+    184: "The Destiny",
+    185: "Stabilized Void Prism"
+}
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        global variables
@@ -131,7 +563,7 @@ bj_forLoopBIndex = 0
 player_name = ''
 
 keep_hash = False
-name_hash = None
+name_hash = 0
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                     function definitions
@@ -947,7 +1379,9 @@ def Oxw(oxw: int):  # takes integer oxw returns integer
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def validate():
-    if au[6] not in range(6):
+    if au[6] not in range(len(ProfessionRank)):
+        return False
+    if au[10] not in range(1, len(Hero) + 1):
         return False
     return True
 
@@ -964,7 +1398,7 @@ def load(code: str):  # Tkr, 51129
 
     print("Load Successful.")
     result = HeroCodeFields(au[1], au[2], au[3], au[4], au[5], ProfessionRank[au[6]],
-                            au[7], au[8], au[9], au[10], au[11], au[12], au[13])
+                            au[7], au[8], au[9], Hero[au[10]], au[11], au[12], au[13])
     for i in range(int((nu - 13) / 2)):
         result.abilities.append(Ability(au[14 + 2 * i], au[15 + 2 * i]))
     result.checksum = au[nu + 1]
@@ -981,24 +1415,31 @@ def load2(code: str):  # Jkr, 40635
 
     print("Load Successful.")
     result = ItemCodeFields(au[1], au[2], au[3], au[4], au[5])
+    print(f'the number of items is: {au[4]}')
     nu = 5
-    for _ in range(6):
+    for i in range(6):
         nu += 1
         itemId = au[nu]
         nu += 1
         if itemId != 30:  # not an empty slot
             itemAmount = au[nu]
-            result.items.append(Item(itemId, itemAmount))
+            result.items[i] = Item(itemId, itemAmount)
+    
+    print(f'the real number of items is: {len(result.items)}')
+    print(result.items)
+    for item in result.items.values():
+        print(f'item is: {ItemName[item.id]}')
+        print(f'amount is: {item.amount}')
 
     result.numberOfStashItems = au[nu]
     nu += 1
-    for _ in range(6):
+    for i in range(6):
         nu += 1
         itemId = au[nu]
         nu += 1
         if itemId != 30:  # not an empty slot
             itemAmount = au[nu]
-            result.stashItems.append(Item(itemId, itemAmount))
+            result.stashItems[i] = Item(itemId, itemAmount)
 
     result.checksum = au[nu + 1]
 
@@ -1007,7 +1448,7 @@ def load2(code: str):  # Jkr, 40635
 
 def save(fields: HeroCodeFields, name: str=None):
     global hu, nu, player_name, keep_hash
-    if not name:
+    if not name or name == '':
         keep_hash = True
     else:
         player_name = name
@@ -1024,7 +1465,10 @@ def save(fields: HeroCodeFields, name: str=None):
     au[7] = fields.revivalLocation
     au[8] = fields.imp5Stage
     au[9] = 1
-    au[10] = fields.heroID
+    try:
+        au[10] = Hero[fields.heroID]
+    except KeyError:
+        return None
     au[11] = fields.heroXP
     au[12] = fields.locationX
     au[13] = fields.locationY
@@ -1042,20 +1486,20 @@ def save(fields: HeroCodeFields, name: str=None):
 
 def save2(fields: ItemCodeFields, name: str=None):
     global hu, nu, player_name, keep_hash
-    if not name:
+    if not name or name == '':
         keep_hash = True
     else:
         player_name = name
     hu = OU[lU]
     au[1] = fields.gold
-    au[2] = fields.lumber
+    au[2] = fields.shards
     au[3] = fields.pvpPoints
     au[4] = fields.unlockedCritterTiers
     au[5] = fields.numberOfItems
     nu = 5
 
     i = 6
-    for item in fields.items:
+    for item in fields.items.values():
         nu += 1
         au[nu] = item.id
         nu += 1
@@ -1071,7 +1515,7 @@ def save2(fields: ItemCodeFields, name: str=None):
     nu += 1
     au[nu] = fields.numberOfStashItems
     i = 6
-    for item in fields.stashItems:
+    for item in fields.stashItems.values():
         nu += 1
         au[nu] = item.id
         nu += 1
@@ -1095,8 +1539,12 @@ def encoding_version():
 
 def load_smart(code: str, mode: int=1):
     in_brackets = False
-    min_length = 10
 
+    if len(code) < 1:
+        print("Load Failed. The code is too short.")
+        return None
+
+    min_length = 10
     if code[0] == '"' and code[len(code) - 1] == '"' or \
         code[0] == "'" and code[len(code) - 1] == "'":
         if len(code) < min_length:
@@ -1151,7 +1599,7 @@ def load_file(text: str):
         return None
     code2 = text[start_pos:end_pos]
 
-    return name, load(code1), load(code2)
+    return name, load(code1), load2(code2), code1, code2
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        initialization
