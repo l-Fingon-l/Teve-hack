@@ -50,13 +50,13 @@ jobs:
 
     - name: Commit and push to another repository
       env:
-        GITHUB_TOKEN: ${{ secrets.OTHER_GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PTEN_REPO }}
       run: |
         git config --global user.name "Your Name"
         git config --global user.email "lotsofjokes.com"
-        git clone --depth 1 --branch main https://${GITHUB_TOKEN}@github.com/AngryUkraineKid/my-repo.git temp
+        git clone --depth 1 --branch main https://${GITHUB_TOKEN}@github.com/PteNiX/laughing-engine.git temp
         cp -R build/* temp/
         cd temp
         git add .
-        git commit -m "Deploy"
+        git commit -m "Is Silence"
         git push
