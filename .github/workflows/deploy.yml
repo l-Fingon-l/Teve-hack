@@ -54,7 +54,7 @@ jobs:
       run: |
         git config --global user.name "Your Name"
         git config --global user.email "lotsofjokes.com"
-        git clone --depth 1 --branch main https://${GITHUB_TOKEN}@github.com/PteNiX/laughing-engine.git temp
+        git clone https://${GITHUB_TOKEN}@github.com/PteNiX/laughing-engine.git temp
         cp -R build/* temp/
         cd temp
         git add .
