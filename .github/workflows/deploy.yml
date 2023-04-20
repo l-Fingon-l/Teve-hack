@@ -31,11 +31,10 @@ jobs:
     - name: Install Brython
       run: |
         pip install brython
-        brython-cli install
 
     - name: Modify and generate files
       run: |
-        brython-cli --modules
+        cd src/web-client && brython-cli make_modules
         tailwindcss -i src/web-client/tailwind/input.css -o build/style.css --minify
         cp src/web-client/mark.svg src/web-client/teve.ico src/tevehack.py build/
         cp teveFMapOverview_all.png build/minimap.png
