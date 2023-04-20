@@ -1,6 +1,6 @@
 import re
 
-html_file_read = "src/web-client/main.html"
+html_file = "src/web-client/main.html"
 
 with open(html_file, "r") as f:
     html_content = f.read()
@@ -8,8 +8,8 @@ with open(html_file, "r") as f:
 patterns = [
     (r'src="\.\./', 'src="'),
     (r'src="brython/', 'src="'),
-    (r'brython\(\d\)', 'brython(0)')
-    (r'src="../../teveFMapOverview_all.png', 'minimap.png'),
+    (r'brython\(\d\)', 'brython(0)'),
+    (r'src="../../teveFMapOverview_all.png', 'minimap.png')
 ]
 
 for pattern, replacement in patterns:
