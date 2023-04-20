@@ -1,5 +1,4 @@
-# WORK IN PROGRESS
-Let's hack the [Twilight Eve's](https://tever.xyz/) save-load system!  
+## Let's hack the [Twilight Eve's](https://tever.xyz/) save-load system!  
 
 Primarily a learning-focused project that leverages a handful of tools including:
 - [Brython](https://brython.info/) (client-side python web scripting)
@@ -12,7 +11,7 @@ Primarily a learning-focused project that leverages a handful of tools including
 - [x] [Decoded](src/utilities/translation.py) and replicated the save-load functionality.
 - [x] [Implemented an intuitive Python API wrapper for dealing with the save codes.](src/tevehack.py)
 - [x] [Extracted and decoded](src/utilities/script.py) the binary resource files with **character**, **spell** and **item names** to complement the future GUI.
-- [ ] Create a [web-based GUI](https://l-fingon-l.github.io/Teve-hack/) for simple user interaction, save-code loading, editing and generation.
+- [x] Create a [web-based GUI](https://l-fingon-l.github.io/Teve-hack/) for simple user interaction, save-code loading, editing and generation.
 
 Python API simplicity and convenience:
 ```py
