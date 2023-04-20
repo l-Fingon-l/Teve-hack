@@ -10,7 +10,7 @@ patterns = [
     (r'src="brython/', 'src="'),
     (r'brython\(\d\)', 'brython(0)'),
     (r'tailwind/build.css', 'style.css'),
-    (r'../../teveFMapOverview_all.png', 'minimap.png')
+    (r'id="map" src=".*"', 'id="map" src="minimap.png"')
 ]
 
 for pattern, replacement in patterns:

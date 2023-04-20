@@ -37,7 +37,7 @@ jobs:
       run: |
         brython-cli --modules
         tailwindcss -i src/web-client/tailwind/input.css -o build/style.css --minify
-        cp src/web-client/mark.svg src/tevehack.py build/
+        cp src/web-client/mark.svg src/web-client/teve.ico src/tevehack.py build/
         cp teveFMapOverview_all.png build/minimap.png
         cp src/web-client/brython/brython.js src/web-client/brython/brython_modules.js build/
         
