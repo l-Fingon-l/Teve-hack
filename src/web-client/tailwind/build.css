@@ -858,11 +858,6 @@ video {
   background-color: rgb(5 150 105 / var(--tw-bg-opacity));
 }
 
-.bg-emerald-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(110 231 183 / var(--tw-bg-opacity));
-}
-
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;

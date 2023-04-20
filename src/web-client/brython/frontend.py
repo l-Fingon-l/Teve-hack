@@ -1,8 +1,8 @@
 import sys
 sys.path.append('../../')
 from tevehack import HeroCodeFields, ItemCodeFields, save, load, load_file
-from tevehack import ProfessionRank, Hero, ItemName, Item, print_code
-from browser import document, window, html, DOMEvent
+from tevehack import ItemName, Item
+from browser import document, window, DOMEvent
 import javascript
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -187,8 +187,6 @@ def refresh_item_code_validity(ev = 0):
 def refresh_hero_code(ev = 0):
     if not HeroCodeValid: return
     
-    #print("Name is: " + get_name())
-    #print_code(HeroCode, name=get_name())
     code = save(HeroCode, get_name())
     if code: hero_code_field.value = f'-load {code}'
     refresh_hero_code_validity()
@@ -197,8 +195,6 @@ def refresh_hero_code(ev = 0):
 def refresh_item_code(ev = 0):
     if not ItemCodeValid: return
     
-    #print("Name is: " + get_name())
-    #print_code(ItemCode, name=get_name())
     code = save(ItemCode, get_name())
     if code: items_code_field.value = f'-load2 {code}'
     refresh_item_code_validity()
