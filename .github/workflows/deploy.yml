@@ -34,7 +34,7 @@ jobs:
 
     - name: Modify and generate files
       run: |
-        cd src/web-client && brython-cli make_modules
+        cd src/web-client && brython-cli make_modules && cd -
         tailwindcss -i src/web-client/tailwind/input.css -o build/style.css --minify
         cp src/web-client/mark.svg src/web-client/teve.ico src/tevehack.py build/
         cp teveFMapOverview_all.png build/minimap.png
