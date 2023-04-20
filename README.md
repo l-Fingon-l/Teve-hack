@@ -23,9 +23,9 @@ hero.locationY = 8000
 code = save(hero, 'Fingon')
 if code: print('-load ' + code)
 
-res = load2('kEF5-2d+d-o2<L-hW<T-R>D?-faQV-wU>U->]Bh-(Q*x-r<)N-TQX')
+res = load('kEF5-2d+d-o2<L-hW<T-R>D?-faQV-wU>U->]Bh-(Q*x-r<)N-TQX')
 res.gold = 9999999
 res.lumber = 300
-code2 = save2(res, 'Fingon')
+code2 = save(res, 'Fingon')
 if code2: print('-load2 ' + code2)
 ```

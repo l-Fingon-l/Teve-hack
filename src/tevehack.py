@@ -1389,7 +1389,7 @@ def validate():
 #                              API
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def load(code: str):  # Tkr, 51129
+def load_hero_code(code: str):  # Tkr, 51129
     global Iu, nu
 
     if not tkr(code):
@@ -1406,7 +1406,7 @@ def load(code: str):  # Tkr, 51129
     return result
 
 
-def load2(code: str):  # Jkr, 40635
+def load_item_code(code: str):  # Jkr, 40635
     global nu
 
     if not mkr(code):
@@ -1446,7 +1446,7 @@ def load2(code: str):  # Jkr, 40635
     return result
 
 
-def save(fields: HeroCodeFields, name: str=None):
+def save_hero_code(fields: HeroCodeFields, name: str=None):
     global hu, nu, player_name, keep_hash
     if not name or name == '':
         keep_hash = True
@@ -1484,7 +1484,7 @@ def save(fields: HeroCodeFields, name: str=None):
     return encoded
 
 
-def save2(fields: ItemCodeFields, name: str=None):
+def save_item_code(fields: ItemCodeFields, name: str=None):
     global hu, nu, player_name, keep_hash
     if not name or name == '':
         keep_hash = True
@@ -1537,7 +1537,16 @@ def encoding_version():
     return lU + 1
 
 
-def load_smart(code: str, mode: int=1):
+def save(fields: HeroCodeFields | ItemCodeFields, name: str=None):
+    if type(fields) == HeroCodeFields:
+        return save_hero_code(fields, name)
+    elif type(fields) == ItemCodeFields:
+        return save_item_code(fields, name)
+    else:
+        return None
+
+
+def load(code: str, mode: int=1):
     in_brackets = False
 
     if len(code) < 1:
@@ -1567,8 +1576,8 @@ def load_smart(code: str, mode: int=1):
     if code[0] == ' ': code = code[1:]
 
     if mode == 1:
-        return load(code)
-    else: return load2(code)
+        return load_hero_code(code)
+    else: return load_item_code(code)
 
 
 def load_file(text: str):
@@ -1599,7 +1608,51 @@ def load_file(text: str):
         return None
     code2 = text[start_pos:end_pos]
 
-    return name, load(code1), load2(code2), code1, code2
+    return name, load_hero_code(code1), load_item_code(code2), code1, code2
+
+
+def print_code(code: HeroCodeFields | ItemCodeFields, name: str = None):
+    if type(code) == HeroCodeFields:
+        hero = code
+        print(f"Code: {save_hero_code(hero, name)}")
+        print("Hero Code Fields:")
+        print(f"  Int1: {hero.int1}")
+        print(f"  Int2: {hero.int2}")
+        print(f"  Food: {hero.food}")
+        print(f"  Profession Level: {hero.professionLvl}")
+        print(f"  Has Fishing Rod: {hero.hasFishingRod}")
+        print(f"  Profession Rank: {hero.professionRank}")
+        print(f"  Revival Location: {hero.revivalLocation}")
+        print(f"  Imp5 Stage: {hero.imp5Stage}")
+        print(f"  Int3: {hero.int3}")
+        print(f"  Hero ID: {hero.heroID}")
+        print(f"  Hero XP: {hero.heroXP}")
+        print(f"  Location X: {hero.locationX}")
+        print(f"  Location Y: {hero.locationY}")
+        print("  Abilities:")
+        for idx, ability in enumerate(hero.abilities):
+            print(f"    {idx + 1}. ID: {ability.id}, Level: {ability.level}")
+        print(f"  Checksum: {hero.checksum}")
+    elif type(code) == ItemCodeFields:
+        items = code
+        print(f"Code: {save_item_code(items, name)}")
+        print("Item Code Fields:")
+        print(f"  Gold: {items.gold}")
+        print(f"  Shards: {items.shards}")
+        print(f"  PVP Points: {items.pvpPoints}")
+        print(f"  Unlocked Critter Tiers: {items.unlockedCritterTiers}")
+        print(f"  Number of Items: {items.numberOfItems}")
+        print("  Items:")
+        for item_id, item in items.items.items():
+            print(f"    {item_id + 1}) ID: {item.id}, Amount: {item.amount}")
+        print(f"  Number of Stash Items: {items.numberOfStashItems}")
+        print("  Stash Items:")
+        for item_id, item in items.stashItems.items():
+            print(f"    {item_id + 1}) ID: {item.id}, Amount: {item.amount}")
+        print(f"  Checksum: {items.checksum}")
+    else:
+        print("No code given.")
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        initialization

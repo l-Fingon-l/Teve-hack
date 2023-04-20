@@ -1,22 +1,24 @@
 import sys
 sys.path.append('../../')
-from tevehack import HeroCodeFields, ItemCodeFields, save, save2, load, load2, load_smart, load_file
-from tevehack import ProfessionRank, Hero, ItemName, Item
+from tevehack import HeroCodeFields, ItemCodeFields, save, load, load_file
+from tevehack import ProfessionRank, Hero, ItemName, Item, print_code
 from browser import document, window, html, DOMEvent
 import javascript
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#                        constant html elements
+#                        constants & html elements
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 coordinate_x = document['coordinate-x']
 coordinate_y = document['coordinate-y']
 svg = document['map_svg']
-mark_side = 35
 hero_code_field = document['HeroCode']
 hero_code_button = document['HeroCodeButton']
 items_code_field = document['ItemsCode']
 items_code_button = document['ItemsCodeButton']
+map_side = 14250 * 2
+side = map_side / 2
+mark_side = 35
 
 input_prof_rank = document['profession-rank-input']
 input_prof_lvl = document['prof-lvl']
@@ -26,7 +28,6 @@ input_gold = document['gold']
 input_shards = document['shards']
 input_pvp_points = document['pvp_points']
 input_player_name = document['player_name']
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                        global code states
@@ -57,6 +58,7 @@ def handleFileSelect(evt):
         input_player_name.value = name
         hero_code_field.value = f'-load {hero_code}'
         items_code_field.value = f'-load2 {items_code}'
+        handleDragLeave()
 
     evt.stopPropagation()
     evt.preventDefault()
@@ -71,11 +73,20 @@ def handleFileSelect(evt):
     reader.bind('load', onload)
 
 def handleDragOver(evt):
+    document['upload-field-pattern'].classList.add('text-emerald-600')
+    document['upload-field-border'].classList.add('border-4')
+    document['upload-field-border'].classList.add('border-emerald-400')
     evt.stopPropagation()
     evt.preventDefault()
 
+def handleDragLeave(evt = 0):
+    document['upload-field-pattern'].classList.remove('text-emerald-600')
+    document['upload-field-border'].classList.remove('border-4')
+    document['upload-field-border'].classList.remove('border-emerald-400')
+
 document['upload-field'].bind('drop', handleFileSelect)
 document['upload-field'].bind('dragover', handleDragOver)
+document['upload-field'].bind('dragleave', handleDragLeave)
 
 
 def parse_hero_code(HeroCodeFields):
@@ -121,7 +132,7 @@ def parse_item_code(ItemCodeFields):
 
 
 def load_hero_code(ev = 0):
-    res = load_smart(hero_code_field.value)
+    res = load(hero_code_field.value)
     if res is None:
         hero_code_field.setCustomValidity("An invalid code.")
         return
@@ -137,7 +148,7 @@ def load_hero_code(ev = 0):
 
 
 def load_item_code(ev = 0):
-    res = load_smart(items_code_field.value)
+    res = load(items_code_field.value)
     if res is None:
         items_code_field.setCustomValidity("An invalid code.")
         return
@@ -158,7 +169,7 @@ def load_item_code(ev = 0):
 
 def get_name():
     name = input_player_name.value
-    if name is javascript.NULL or name == '': return None
+    if name is javascript.NULL or name == '': return ''
     if len(name) < 2 and name[0].isalpha(): return name
 
     end = name.rfind('#')
@@ -166,18 +177,18 @@ def get_name():
 
 
 def refresh_hero_code_validity(ev = 0):
-    if not hero_code_field.checkValidity():
-        hero_code_field.setCustomValidity("")
+    hero_code_field.setCustomValidity("")
 
 
 def refresh_item_code_validity(ev = 0):
-    if not items_code_field.checkValidity():
-        items_code_field.setCustomValidity("")
+    items_code_field.setCustomValidity("")
 
 
 def refresh_hero_code(ev = 0):
     if not HeroCodeValid: return
     
+    #print("Name is: " + get_name())
+    #print_code(HeroCode, name=get_name())
     code = save(HeroCode, get_name())
     if code: hero_code_field.value = f'-load {code}'
     refresh_hero_code_validity()
@@ -186,7 +197,9 @@ def refresh_hero_code(ev = 0):
 def refresh_item_code(ev = 0):
     if not ItemCodeValid: return
     
-    code = save2(ItemCode, get_name())
+    #print("Name is: " + get_name())
+    #print_code(ItemCode, name=get_name())
+    code = save(ItemCode, get_name())
     if code: items_code_field.value = f'-load2 {code}'
     refresh_item_code_validity()
 
@@ -200,30 +213,41 @@ def update_location(x, y):
     rec_x = rect.right - rect.left
     rec_y = rect.bottom - rect.top
     x, y = float(x), float(y)
+    x = int(-side if x < -side else side if x > side else x)
+    y = int(-side if y < -side else side if y > side else y)
 
-    x = int(0 if x < 0 else rec_x if x > rec_x else x)
-    y = int(0 if y < 0 else rec_y if y > rec_y else y)
-
-    #print(f'rect: {rect.left} {rect.top} {rect.right} {rect.bottom}')
+    draw_location(*convert_coordinates(x, y, rec_x, rec_y, 'game_to_webgui'))
     print(f'coordinates : {x}, {y}')
-    coordinate_x.value = x
-    coordinate_y.value = y
-    draw_location(x, y)
+    coordinate_x.value = HeroCode.locationX = x
+    coordinate_y.value = HeroCode.locationY = y
 
-    HeroCode.locationX = x
-    HeroCode.locationY = y
     refresh_hero_code()
 
 
 def map_clicked(ev):
-    # get the bounding rectangle of the element clicked
     rect = window.Rectangle(svg)
-
-    # Mouse position
     x = ev.clientX - rect.left
     y = ev.clientY - rect.top
+    rec_x = rect.right - rect.left
+    rec_y = rect.bottom - rect.top
 
+    x = int(0 if x < 0 else rec_x if x > rec_x else x)
+    y = int(0 if y < 0 else rec_y if y > rec_y else y)
+    x, y = convert_coordinates(x, y, rec_x, rec_y, 'webgui_to_game')
     update_location(x, y)
+
+
+def convert_coordinates(x, y, rec_x, rec_y, mode):
+    if mode == 'webgui_to_game':
+        x = int( (x - rec_x / 2) / rec_x * map_side)
+        y = int(-(y - rec_y / 2) / rec_y * map_side)
+    elif mode == 'game_to_webgui':
+        x = int( (x / map_side + 0.5) * rec_x)
+        y = int(-(y / map_side - 0.5) * rec_y)
+    else:
+        return None
+    
+    return x, y
 
 
 def is_valid_datalist_data(list, value) -> bool:
@@ -263,8 +287,7 @@ def refresh_prof_lvl(ev = 0):
         return
 
     HeroCode.professionLvl = prof_lvl
-    if not input_prof_lvl.checkValidity():
-        input_prof_lvl.setCustomValidity("")
+    input_prof_lvl.setCustomValidity("")
 
     HeroCodeValid = True
     refresh_hero_code()
@@ -281,8 +304,7 @@ def refresh_xp(ev = 0):
         return
 
     HeroCode.heroXP = xp
-    if not input_xp.checkValidity():
-        input_xp.setCustomValidity("")
+    input_xp.setCustomValidity("")
     
     HeroCodeValid = True
     refresh_hero_code()
@@ -297,8 +319,7 @@ def refresh_prof_rank(ev = 0):
         return
     
     HeroCode.professionRank = input_prof_rank.value
-    if not input_prof_rank.checkValidity():
-        input_prof_rank.setCustomValidity("")
+    input_prof_rank.setCustomValidity("")
     
     HeroCodeValid = True
     refresh_hero_code()
@@ -313,8 +334,7 @@ def refresh_hero(ev = 0):
         return
 
     HeroCode.heroID = input_hero.value
-    if not input_hero.checkValidity():
-        input_hero.setCustomValidity("")
+    input_hero.setCustomValidity("")
     
     HeroCodeValid = True
     refresh_hero_code()
@@ -331,8 +351,7 @@ def refresh_gold(ev = 0):
         return
     
     ItemCode.gold = gold
-    if not input_gold.checkValidity():
-        input_gold.setCustomValidity("")
+    input_gold.setCustomValidity("")
     
     ItemCodeValid = True
     refresh_item_code()
@@ -349,8 +368,7 @@ def refresh_shards(ev = 0):
         return
     
     ItemCode.shards = shards
-    if not input_shards.checkValidity():
-        input_shards.setCustomValidity("")
+    input_shards.setCustomValidity("")
 
     ItemCodeValid = True
     refresh_item_code()
@@ -367,8 +385,7 @@ def refresh_pvp_points(ev = 0):
         return
 
     ItemCode.pvpPoints = pvp_points
-    if not input_pvp_points.checkValidity():
-        input_pvp_points.setCustomValidity("")
+    input_pvp_points.setCustomValidity("")
     
     ItemCodeValid = True
     refresh_item_code()
@@ -383,7 +400,13 @@ def refresh_item(ev):
         try:
             if ev.value is javascript.NULL: ev.value = 0 
             int(ev.value)  # just a check for cast validity
-            refresh_item(document[ev.id[:-6]])
+            if not ev.checkValidity():
+                ItemCodeValid = False
+                return
+            item_element = document[ev.id[:-6]]
+            if  item_element.value is javascript.NULL or item_element.value == '':
+                return
+            refresh_item(item_element)
         except (TypeError, ValueError, KeyError):
             ev.setCustomValidity("Invalid field.")
             ItemCodeValid = False
@@ -400,16 +423,21 @@ def refresh_item(ev):
 
     # Items or StashItems
     count = document[ev.id + '-count']
+    if not count.checkValidity():
+        return
+    try:
+        int(count.value)  # just a check for cast validity
+    except (TypeError, ValueError, KeyError):
+        count.value = 1
+    
     if pop:
         (ItemCode.items if ev.id[0] == 'i' else ItemCode.stashItems).pop(int(ev.id[-1]) - 1, None)
     else:
         item = Item(ev.value, count.value)
         (ItemCode.items if ev.id[0] == 'i' else ItemCode.stashItems)[int(ev.id[-1]) - 1] = item
 
-    if not ev.checkValidity():
-        ev.setCustomValidity("")
-    if not count.checkValidity():
-        count.setCustomValidity("")
+    ev.setCustomValidity("")
+    count.setCustomValidity("")
 
     ItemCodeValid = True
     refresh_item_code()
@@ -430,6 +458,8 @@ items_code_field.bind('click', refresh_item_code_validity)
 for i in range(6):
     document[f'item-{i + 1}'].bind('change', refresh_item)
     document[f'item-{i + 1}-count'].bind('change', refresh_item)
+    document[f'stash-item-{i + 1}'].bind('change', refresh_item)
+    document[f'stash-item-{i + 1}-count'].bind('change', refresh_item)
 
 input_prof_rank.bind('change', refresh_prof_rank)
 input_prof_lvl.bind('change', refresh_prof_lvl)

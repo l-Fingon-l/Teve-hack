@@ -1,12 +1,12 @@
-from tevehack import ProfessionRank, load_smart, save, load, save2, load2, Item, HeroCodeFields
+from tevehack import ProfessionRank, load_smart, save, load, Item, HeroCodeFields
 
 # hero = load('[XE<-ZU3!-hLMg-!LYS-]T&a')
 # for i in range(0x34):
 #     hero.heroID = i + 1
 #     print('-load ' + save(hero))
 
-hero = HeroCodeFields(int1=2, int2=1, food=1, professionLvl = 0, hasFishingRod = 0,
-    professionRank=0, revivalLocation=0, imp5Stage=0, int3=1, heroID=1, heroXP=0, locationX=0, locationY=0)
+hero = HeroCodeFields(int1=2, int2=1, food=1, professionLvl = 0, hasFishingRod = 0, professionRank='Never caught a fish',
+    revivalLocation=0, imp5Stage=0, int3=1, heroID='Acolyte (Male)', heroXP=0, locationX=0, locationY=0)
 print('-load ' + save(hero))
 print('-load ' + save(hero, ''))
 exit()
@@ -42,5 +42,5 @@ res = load2('kEF5-2d+d-o2<L-hW<T-R>D?-faQV-wU>U->]Bh-(Q*x-r<)N-TQX')
 # res = load2('_kEF5-2d+d-o2<L-hW<T-R>D?----faQV-wU>U->]Bh-(Q*x-r<)N-TQX')
 res.gold = 9999999
 res.lumber = 300
-code2 = save2(res, 'Fingon')
+code2 = save(res, 'Fingon')
 if code2: print('-load2 ' + code2)
