@@ -58,5 +58,5 @@ jobs:
         cp -R build/* temp/
         cd temp
         git add .
-        git commit -m "Update & deploy"
+        git commit -m "Deploy"
         git push
