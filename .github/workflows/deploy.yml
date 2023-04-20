@@ -1,0 +1,62 @@
+name: Compile and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: |
+        npm install -g tailwindcss@latest postcss@latest autoprefixer@latest
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Brython
+      run: |
+        pip install brython
+        brython-cli install
+
+    - name: Modify and generate files
+      run: |
+        brython-cli --modules
+        tailwindcss -i src/web-client/tailwind/input.css -o build/style.css --minify
+        cp src/web-client/mark.svg src/tevehack/py build/
+        cp teveFMapOverview_all.png build/minimap.png
+        cp src/web-client/brython/brython.js src/web-client/brython/brython_modules.js build/
+        
+        # Modify and move main html
+        python .github/workflows/update_links.py
+        cp src/web-client/main.html build/index.html
+
+        # Modify and move frontend py
+        awk '/^from/,EOF { print }' src/web-client/brython/frontend.py > build/frontend.py
+
+    - name: Commit and push to another repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.OTHER_GITHUB_TOKEN }}
+      run: |
+        git config --global user.name "No One"
+        git config --global user.email "lotsofjokes.com"
+        git clone --depth 1 --branch main https://${GITHUB_TOKEN}@github.com/AngryUkraineKid/my-repo.git temp
+        cp -R build/* temp/
+        cd temp
+        git add .
+        git commit -m "Update & deploy"
+        git push
