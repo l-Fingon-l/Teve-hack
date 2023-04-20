@@ -52,7 +52,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.OTHER_GITHUB_TOKEN }}
       run: |
-        git config --global user.name "No One"
+        git config --global user.name "Your Name"
         git config --global user.email "lotsofjokes.com"
         git clone --depth 1 --branch main https://${GITHUB_TOKEN}@github.com/AngryUkraineKid/my-repo.git temp
         cp -R build/* temp/
