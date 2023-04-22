@@ -1,9 +1,46 @@
-from tevehack import ProfessionRank, load_smart, save, load, Item, HeroCodeFields
+from tevehack import ProfessionRank, save, load, load_file, Item, HeroCodeFields, ItemCodeFields, print_code, load_item_code
 
 # hero = load('[XE<-ZU3!-hLMg-!LYS-]T&a')
 # for i in range(0x34):
 #     hero.heroID = i + 1
 #     print('-load ' + save(hero))
+load_item_code('ZRhL-?Jf)-77<5-?PO>-4]bk-,*L<-jFp?-JkKg-X7Wz-,pn]-Pagk')
+load_item_code(save(ItemCodeFields(gold=1, shards=0, pvpPoints=0, unlockedCritterTiers=0, numberOfItems=0)))
+ItemCode = ItemCodeFields(gold=1, shards=0, pvpPoints=0, unlockedCritterTiers=0, numberOfItems=0)
+save(ItemCode)
+
+hero = load_file(
+    '''
+function PreloadFiles takes nothing returns nothing
+
+	call PreloadStart()
+	call Preload( "MAP: Twilight's Eve R4" )
+	call Preload( "Brought to you by Donach#6231 and KryptonRazer#3935, developers for new Teve Community!" )
+	call Preload( "Join us at discord.tever.xyz and visit tever.xyz" )
+	call Preload( "Version: Teve_R4.18.4" )
+	call Preload( "Recommended Wc3 Version: 1.33.0.19378 (classic)" )
+	call Preload( "Player Name: KawerOrda" )
+	call Preload( "   " )
+	call Preload( "Hero: ArchTemplar [Lv.99]" )
+	call Preload( "Load Type: Hero" )
+	call Preload( "-load g!4E-C&9+-hR7Q-k6[A-C7MC-kVte-mQ" )
+	call Preload( "PvP rank: None (Points: 0)" )
+	call Preload( "Fishing profession: Master Fisherman (Points: 4)" )
+	call Preload( "Imp5 Stage Finished: 0" )
+	call Preload( "   " )
+	call Preload( "Load Type: Item" )
+	call Preload( "-load2 ZRhL-?Jf)-77<5-?PO>-4]bk-,*L<-jFp?-JkKg-X7Wz-,pn]-Pagk" )
+	call Preload( "Gold: 284   Shards: 0" )
+	call Preload( "Unlocked Critter Tiers: none" )
+	call Preload( "Items Worn by Hero: " )
+	call Preload( "Items in Stash: " )
+	call Preload( "        " )
+	call PreloadEnd( 1230815.1 )
+
+endfunction
+
+'''
+)
 
 hero = HeroCodeFields(int1=2, int2=1, food=1, professionLvl = 0, hasFishingRod = 0, professionRank='Never caught a fish',
     revivalLocation=0, imp5Stage=0, int3=1, heroID='Acolyte (Male)', heroXP=0, locationX=0, locationY=0)

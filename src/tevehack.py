@@ -1004,35 +1004,25 @@ def pEw():  # Init function, takes nothing returns nothing
 
 # 73102 rRw
 def mFr():  # Init function2, takes nothing returns nothing
+            # these are the encryption keys
     global lU
     oU[0] = ""
     OU[0] = ""
     lU = 0
-    kw = "EN3P29DXeruxo6RUW5ZvYFbwgQ7hfAyBztSn4sKCqHpLOajkTVdG8JmcM"
-    jw = "vHGKFaXA5V72NbWruZJLxYnSR3k8Owmhepszg6oTyEDdUtqMQP4jcf9CB"
-    xw = "9fb%(wgQtS+_n4s[KCqH#pLAyBz<ruxo6R-mcM>EN3PU.D7hW5]ZvYF,8J$OX/eajkTV)d*G2"
-    vw = "vHmh/eps#(zFa6o&]TWruZJLxYnSR_=3k>8Ow)A5V>7yEDdU.tqMQP4jcf9,C$+BXG[*K2Nbg"
-    mw = "9fb(wgQtS+_n4s[KCqH#pLAyBz<ruxo6R-mcM>EN3PU.D7hW5]ZvYF,8JOXeajkTV)d*G2"
-    Qw = "]Z4sp53PU.ed*D7hW6R-mcM>ENzn9fbF,)(wgy[KS+_uxo8JOXG2qH#vYaCQtjkTVBLA<r"
-    Ww = "Fs3u.hSZ6w7>LQWfz8aX<gG,trRcNkBeU2pC4Po)qOAxvb]D9dMVET(Yy+5#mHnJj*K["
-    Ew = "p>wn8sv<mRHQeX7FrxqC[2K9MWdoUgf5yVGLhAZ+zJu3B#)SPbjD(OT.*c64kENY]t,a"
-    Zw = "t[nFb&G.Q*co6Sar2p5Hw8JzqhsREY!VLx9(kP3NXAT>v#ZOWgMd4U)jKBD+m]u<eCy7_f?"
-    Uw = "O)_CSDLxWr?6bmBvgUt5dHFQpqY[XokG9P4*yj.T<ZKe>87ERw3Mfza!+2sVc#Anu(hJN]"
-    lU = 0
-    oU[lU] = kw
-    OU[lU] = jw
+    oU[lU] = "EN3P29DXeruxo6RUW5ZvYFbwgQ7hfAyBztSn4sKCqHpLOajkTVdG8JmcM"
+    OU[lU] = "vHGKFaXA5V72NbWruZJLxYnSR3k8Owmhepszg6oTyEDdUtqMQP4jcf9CB"
     lU += 1
-    oU[lU] = xw
-    OU[lU] = vw
+    oU[lU] = "9fb%(wgQtS+_n4s[KCqH#pLAyBz<ruxo6R-mcM>EN3PU.D7hW5]ZvYF,8J$OX/eajkTV)d*G2"
+    OU[lU] = "vHmh/eps#(zFa6o&]TWruZJLxYnSR_=3k>8Ow)A5V>7yEDdU.tqMQP4jcf9,C$+BXG[*K2Nbg"
     lU += 1
-    oU[lU] = mw
-    OU[lU] = Qw
+    oU[lU] = "9fb(wgQtS+_n4s[KCqH#pLAyBz<ruxo6R-mcM>EN3PU.D7hW5]ZvYF,8JOXeajkTV)d*G2"
+    OU[lU] = "]Z4sp53PU.ed*D7hW6R-mcM>ENzn9fbF,)(wgy[KS+_uxo8JOXG2qH#vYaCQtjkTVBLA<r"
     lU += 1
-    oU[lU] = Ww
-    OU[lU] = Ew
+    oU[lU] = "Fs3u.hSZ6w7>LQWfz8aX<gG,trRcNkBeU2pC4Po)qOAxvb]D9dMVET(Yy+5#mHnJj*K["
+    OU[lU] = "p>wn8sv<mRHQeX7FrxqC[2K9MWdoUgf5yVGLhAZ+zJu3B#)SPbjD(OT.*c64kENY]t,a"
     lU += 1
-    oU[lU] = Zw
-    OU[lU] = Uw
+    oU[lU] = "t[nFb&G.Q*co6Sar2p5Hw8JzqhsREY!VLx9(kP3NXAT>v#ZOWgMd4U)jKBD+m]u<eCy7_f?"
+    OU[lU] = "O)_CSDLxWr?6bmBvgUt5dHFQpqY[XokG9P4*yj.T<ZKe>87ERw3Mfza!+2sVc#Anu(hJN]"
     lU += 1
     oU[lU] = "t[nFb&G.)jKp5Hw?8,JzqCy7_fQ*co6Sar2T>v#ZOWghsEY!VLx9(kP3NXABD+m]uR<eMd4U"
     OU[lU] = "ObmBvgUt5d87ERw3Mfza!+2sVc#AnqY[XokG9P4*yu(hJNHFQpj.T,<ZKe>)_CSDLxWr?6]"
@@ -1040,7 +1030,7 @@ def mFr():  # Init function2, takes nothing returns nothing
     oU[lU] = "!gWY2tqxeA,Q?aT8&N9Fd6kOm]*)XscB+fZRHnEy[wM5GP#p(z<SLbCKjU_u73hDVr>vo4J"
     OU[lU] = "AZf!N[8qLhzUgCwntGW9SyDb_Pd3Qc?kM4KjvVmeJu*ap65+Y)F,BHROX<#(r]>Exs7To2"
 
-    for i in range(1, 24):
+    for i in range(1, 31):
         au[i] = -1
 
 
@@ -1212,7 +1202,7 @@ def MQw(XQw: str):  # takes string returns integer (number of the character \ nu
     return 0
 
 
-def decode(dWw: str):  # takes string dWw returns boolean
+def decode(dWw: str, mode: str):  # takes string dWw returns boolean
     global nu, name_hash
     GWw = 0  # local integer
     FWw = ""  # local string
@@ -1295,13 +1285,9 @@ def decode(dWw: str):  # takes string dWw returns boolean
             break
     RWw = tWw(FWw[:TWw])
     nu = GWw - 1
-    # if RWw == au[GWw]:
-    #     return True
-    # return False
-    # return True
 
     name_hash = au[GWw] - RWw
-    return validate()
+    return validate(mode)
 
 
 def tWw(wWw: str):  # takes string wWw returns integer, calculates the hash
@@ -1326,12 +1312,12 @@ def tWw(wWw: str):  # takes string wWw returns integer, calculates the hash
     return rWw
 
 
-def Cjw(Xjw: str):  # takes string Xjw returns boolean
+def Cjw(Xjw: str, mode: str):  # takes string Xjw returns boolean
     global Fu, hu
     if not Fu:
         hu = hu.upper()
         Xjw = Xjw.upper()
-    return decode(Xjw)
+    return decode(Xjw, mode)
 
 
 def tkr(ukr: str):  # takes string ukr returns boolean
@@ -1341,7 +1327,7 @@ def tkr(ukr: str):  # takes string ukr returns boolean
     while skr >= 0:
         hu = oU[skr]
         qu = ukr
-        fu = Cjw(qu)
+        fu = Cjw(qu, 'hero')
         if fu:
             rkr = True
             break
@@ -1356,7 +1342,7 @@ def mkr(kkr: str):  # takes string kkr returns boolean
     while vkr >= 0:
         hu = OU[vkr]
         qu = kkr
-        fu = Cjw(qu)
+        fu = Cjw(qu, 'item')
         if fu:
             xkr = True
             break
@@ -1378,10 +1364,16 @@ def Oxw(oxw: int):  # takes integer oxw returns integer
 #                       utility functions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def validate():
-    if au[6] not in range(len(ProfessionRank)):
-        return False
-    if au[10] not in range(1, len(Hero) + 1):
+def validate(mode: str):
+    if mode == 'hero':
+        if au[6] not in range(len(ProfessionRank)):
+            return False
+        if au[10] not in range(1, len(Hero) + 1):
+            return False
+    elif mode == 'item':
+        if au[5] not in range(7):
+            return False
+    else:
         return False
     return True
 
@@ -1415,7 +1407,6 @@ def load_item_code(code: str):  # Jkr, 40635
 
     print("Load Successful.")
     result = ItemCodeFields(au[1], au[2], au[3], au[4], au[5])
-    print(f'the number of items is: {au[4]}')
     nu = 5
     for i in range(6):
         nu += 1
@@ -1424,12 +1415,6 @@ def load_item_code(code: str):  # Jkr, 40635
         if itemId != 30:  # not an empty slot
             itemAmount = au[nu]
             result.items[i] = Item(itemId, itemAmount)
-    
-    print(f'the real number of items is: {len(result.items)}')
-    print(result.items)
-    for item in result.items.values():
-        print(f'item is: {ItemName[item.id]}')
-        print(f'amount is: {item.amount}')
 
     result.numberOfStashItems = au[nu]
     nu += 1
@@ -1644,11 +1629,11 @@ def print_code(code: HeroCodeFields | ItemCodeFields, name: str = None):
         print(f"  Number of Items: {items.numberOfItems}")
         print("  Items:")
         for item_id, item in items.items.items():
-            print(f"    {item_id + 1}) ID: {item.id}, Amount: {item.amount}")
+            print(f"    {item_id + 1}) ID: {ItemName[item.id]}, Amount: {item.amount}")
         print(f"  Number of Stash Items: {items.numberOfStashItems}")
         print("  Stash Items:")
         for item_id, item in items.stashItems.items():
-            print(f"    {item_id + 1}) ID: {item.id}, Amount: {item.amount}")
+            print(f"    {item_id + 1}) ID: {ItemName[item.id]}, Amount: {item.amount}")
         print(f"  Checksum: {items.checksum}")
     else:
         print("No code given.")
