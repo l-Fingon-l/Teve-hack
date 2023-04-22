@@ -1569,7 +1569,7 @@ def load_file(text: str):
     # find the player_name
     pattern = 'call Preload( "Player Name: '
     start_pos = text.find(pattern) + len(pattern)
-    end_pos = text.find('\n', start_pos) - 3
+    end_pos = text.find('"', start_pos)
     if start_pos < 300 or end_pos < start_pos:  # roughly
         print("Load Failed. The save file is invalid.")
         return None
@@ -1578,7 +1578,7 @@ def load_file(text: str):
     # find the first code
     pattern = 'call Preload( "-load '
     start_pos = text.find(pattern) + len(pattern)
-    end_pos = text.find('\n', start_pos) - 3
+    end_pos = text.find('"', start_pos)
     if end_pos <= start_pos:  # yields neither end_pos nor start_pos is -1
         print("Load Failed. The save file is invalid.")
         return None
@@ -1587,7 +1587,7 @@ def load_file(text: str):
     # find the second code
     pattern = 'call Preload( "-load2 '
     start_pos = text.find(pattern) + len(pattern)
-    end_pos = text.find('\n', start_pos) - 3
+    end_pos = text.find('"', start_pos)
     if end_pos <= start_pos:  # yields neither end_pos nor start_pos is -1
         print("Load Failed. The save file is invalid.")
         return None

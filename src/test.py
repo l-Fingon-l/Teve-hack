@@ -4,10 +4,10 @@ from tevehack import ProfessionRank, save, load, load_file, Item, HeroCodeFields
 # for i in range(0x34):
 #     hero.heroID = i + 1
 #     print('-load ' + save(hero))
-load_item_code('ZRhL-?Jf)-77<5-?PO>-4]bk-,*L<-jFp?-JkKg-X7Wz-,pn]-Pagk')
-load_item_code(save(ItemCodeFields(gold=1, shards=0, pvpPoints=0, unlockedCritterTiers=0, numberOfItems=0)))
-ItemCode = ItemCodeFields(gold=1, shards=0, pvpPoints=0, unlockedCritterTiers=0, numberOfItems=0)
-save(ItemCode)
+# load_item_code('ZRhL-?Jf)-77<5-?PO>-4]bk-,*L<-jFp?-JkKg-X7Wz-,pn]-Pagk')
+# load_item_code(save(ItemCodeFields(gold=1, shards=0, pvpPoints=0, unlockedCritterTiers=0, numberOfItems=0)))
+# ItemCode = ItemCodeFields(gold=1, shards=0, pvpPoints=0, unlockedCritterTiers=0, numberOfItems=0)
+# save(ItemCode)
 
 hero = load_file(
     '''
