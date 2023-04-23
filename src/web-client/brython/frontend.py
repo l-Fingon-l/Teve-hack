@@ -116,7 +116,7 @@ def parse_item_code(ItemCodeFields):
         else:
             item, amount = '', ''
         document[f'item-{i + 1}'].value = item
-        document[f'item-{i + 1}-count'].value = amount
+        document[f'item-{i + 1}-count'].value = (1 if amount == 0 else amount)
 
     for i in range(6):
         if i < len(ItemCodeFields.stashItems):
@@ -124,7 +124,7 @@ def parse_item_code(ItemCodeFields):
         else:
             item, amount = '', ''
         document[f'stash-item-{i + 1}'].value = item
-        document[f'stash-item-{i + 1}-count'].value = amount
+        document[f'stash-item-{i + 1}-count'].value = (1 if amount == 0 else amount)
 
     items_code_field.focus()
 
